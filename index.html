@@ -12,18 +12,6 @@
 </head>
 
 <body>
-  	$(if chap-id)
-		<form name="sendin" action="$(link-login-only)" method="post">
-			<input type="hidden" name="username">
-			<input type="hidden" name="password">
-			<input type="hidden" name="dst" value="$(link-orig)">
-			<input type="hidden" name="popup" value="true">
-		</form>
-		<script src="md5.js"></script>
-		<script>
-            var _0x5b12=['1CDUnCl','#memuser','970004brwZGt','password','1061262ABRHnM','submit','val','#mempass','6337vVahSz','197702CKgOiB','#vcode','127guybbU','1NHpYUZ','$(chap-id)','sendin','username','$(chap-challenge)','8086ioeyTJ','1067863AppLwV','value','2502263QEZmkB'];var _0x2392=function(_0x45d347,_0x5902c1){_0x45d347=_0x45d347-0x185;var _0x5b129e=_0x5b12[_0x45d347];return _0x5b129e;};(function(_0x11932c,_0x48a4f6){var _0x4c481f=_0x2392;while(!![]){try{var _0x218160=-parseInt(_0x4c481f(0x185))+-parseInt(_0x4c481f(0x18a))+-parseInt(_0x4c481f(0x194))*-parseInt(_0x4c481f(0x18c))+parseInt(_0x4c481f(0x188))*-parseInt(_0x4c481f(0x190))+parseInt(_0x4c481f(0x191))+-parseInt(_0x4c481f(0x199))*parseInt(_0x4c481f(0x193))+parseInt(_0x4c481f(0x187));if(_0x218160===_0x48a4f6)break;else _0x11932c['push'](_0x11932c['shift']());}catch(_0x819534){_0x11932c['push'](_0x11932c['shift']());}}}(_0x5b12,0xa87b5));function doLogin1(){var _0xc98683=_0x2392;return document[_0xc98683(0x196)][_0xc98683(0x197)]['value']=$(_0xc98683(0x192))[_0xc98683(0x18e)](),document['sendin'][_0xc98683(0x18b)][_0xc98683(0x186)]=hexMD5('$(chap-id)'+$('#vcode')[_0xc98683(0x18e)]()+_0xc98683(0x198)),document[_0xc98683(0x196)][_0xc98683(0x18d)](),![];}function doLogin2(){var _0x38512b=_0x2392;return document[_0x38512b(0x196)][_0x38512b(0x197)][_0x38512b(0x186)]=$(_0x38512b(0x189))[_0x38512b(0x18e)](),document[_0x38512b(0x196)][_0x38512b(0x18b)][_0x38512b(0x186)]=hexMD5(_0x38512b(0x195)+$(_0x38512b(0x18f))['val']()+_0x38512b(0x198)),document[_0x38512b(0x196)][_0x38512b(0x18d)](),![];}
-		</script>
-	$(endif)
     <header id="header">
           <nav class="navbar navbar-expand-md fixed-top navbar-dark">
             <div class="container">
@@ -55,17 +43,10 @@
                 <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1">
                     <div class="container-fluid">
                     <!-- Button trigger modal -->
-                    <h1>Welcome to the new look of KAYBIGAN_hotspot</h1>
-                    <h4>formerly LodiWifi Hotspot.</h4>
-                    <div class="container mt-2">
-                        $(if error)
-                            <div class="alert alert-danger" role="alert">
-                              $(error)
-                            </div>
-                        $(endif)
-                    </div>
-                    <a class="btn btn-primary btn-lg mt-4" data-bs-toggle="modal" href="#loginform"><i class="icon-login"></i>Login</a>
-		    <a class="btn btn-dark btn-lg mt-4" data-bs-toggle="modal" onclick="window.location='qr.html'"><i class="icon-qrcode"></i>Scan QR code</a>
+                    <h1>Welcome to KAYBIGAN_hotspot</h1>
+                    <h4>Please Sign-in your credentials below.</h4>
+                    <a class="btn btn-primary btn-lg mt-4" data-bs-toggle="modal" href="#loginform"><i class="icon-login"></i> Member Login</a>
+					<a class="btn btn-dark btn-lg mt-4" data-bs-toggle="modal" onclick="window.location='qr.html'"><i class="icon-qrcode"></i>Scan Voucher QR code</a>
                     </div>
                 </div>
                 <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 ads">
@@ -193,35 +174,19 @@
           </div>
           <div class="modal-body">
             <ul class="nav nav-tabs" id="loginType" role="tablist">
-                <li class="nav-item"><button class="nav-link active" id="voucher-tab" data-bs-toggle="tab" data-bs-target="#voucher" type="button" role="tab" aria-controls="voucher" aria-selected="true">Voucher</button></li>
-                <li class="nav-item"><button class="nav-link" id="userpass-tab" data-bs-toggle="tab" data-bs-target="#userpass" type="button" role="tab" aria-controls="userpass" aria-selected="false">Member</button></li>
-                <li class="nav-item">$(if trial == 'yes')<button class="nav-link" id="trial-tab" data-bs-toggle="tab" data-bs-target="#trial" type="button" role="tab" aria-controls="trial" aria-selected="false">Trial</button>$(endif)</li>
+                <li class="nav-item"><button class="nav-link active" id="userpass-tab" data-bs-toggle="tab" data-bs-target="#userpass" type="button" role="tab" aria-controls="userpass" aria-selected="false">Member</button></li>
+                <li class="nav-item"><button class="nav-link" id="trial-tab" data-bs-toggle="tab" data-bs-target="#trial" type="button" role="tab" aria-controls="trial" aria-selected="false">Trial</button></li>
             </ul>
             <div class="tab-content" id="loginContent">
-                <div class="tab-pane fade show active" id="voucher" role="tabpanel" aria-labelledby="voucher-tab">
-                    <div class="mt-3"><h5>Login using Voucher</h5></div>
-                    <form autocomplete="off" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin1()" $(endif)>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <div class="input-group-text"><i class="icon-ticket"></i></div>
-                                <input type="text" class="form-control" id="vcode" aria-describedby="vouchHelp" placeholder="Enter voucher code" value="$(username)"/>
-                            </div>
-                            <small id="vouchHelp" class="fst-italic">For username and password credentials, use Member tab.</small>
-                        </div>
-                        <div class="mb-2">
-                        <button type="submit" class="btn btn-success btn-lg"><i class="icon-login"></i>Login</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="tab-pane fade" id="userpass" role="tabpanel" aria-labelledby="userpass-tab">
+                <div class="tab-pane fade show active" id="userpass" role="tabpanel" aria-labelledby="userpass-tab">
                     <div class="mt-3"><h5>Member Login</h5></div>
-                    <form autocomplete="off" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin2()" $(endif)>
+                    <form autocomplete="off" action="http://10.0.0.1/login" onsubmit="checkit()">
                         <div class="form-group">
                             <div class="mb-3">
                                 <label for="user">Username</label>
                                 <div class="input-group">
                                     <div class="input-group-text"><i class="icon-user-circle"></i></div>
-                                    <input type="text" class="form-control" id="memuser" placeholder="Username" value="$(username)"/>
+                                    <input type="text" class="form-control" id="memuser" placeholder="Username"/>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -237,15 +202,13 @@
                         </div>
                     </form>
                 </div>
-                $(if trial == 'yes')
                 <div class="tab-pane fade" id="trial" role="tabpanel" aria-labelledby="trial-tab">
                     <div class="mt-3"><h5>Free Trial</h5></div>
                     <div class="d-grid gap-2">
-                    <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)" class="btn btn-info" role="button">Continue to Facebook</a>
+                    <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)" class="btn btn-info disabled" role="button">Continue to Facebook</a>
                     </div>
                     <br>
                 </div>
-                $(endif)
             </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
@@ -257,6 +220,12 @@
 	<!-- jQuery first, then Bootstrap JS -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+	<script>
+    function checkit() {
+		alert($("#memuser").val())
+		alert($("#mempass").val())
+	}
+    </script>
     <script>
     console.log("Hi coder! What are u doin in developer's console? Btw, I just want you to see this COVID-19 statistics in the Philippines.")
     $(document).ready(function(){
@@ -265,6 +234,7 @@
         });
     });
     </script>
+
 </body>
 
 </html>
