@@ -1,0 +1,96 @@
+#header {
+  color: white;
+}
+
+#header .btn-outline-primary {
+  color: white;
+}
+
+#loginhome {
+  color: white;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding: 60px 0 100px 0;
+}
+
+#loginhome::before {
+  content: '';
+  position: absolute;
+  right: -100%;
+  top: 20%;
+  width: 250%;
+  height: 200%;
+  z-index: -1;
+  background-color: #e8ecf5;
+  transform: skewY(135deg);
+}
+
+@media (max-width: 991px) {
+  #loginhome {
+    text-align: center;
+  }
+  #loginhome .img-k img {
+    width: 60%;
+  }
+}
+
+@media (max-width: 768px) {
+  #loginhome .img-k img {
+    width: 70%;
+  }
+}
+
+@media (max-width: 575px) {
+  #loginhome .img-k img {
+    width: 80%;
+  }
+}
+
+section {
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.section-bg {
+  background-color: #f2f5fa;
+}
+
+.section-title {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.bgimage{
+  background-image: url('../img/background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+div.ads{
+  content: url('../img/ads.png');
+}
+
+.navbar{
+  background-color: rgba(0,0,0,0.5);
+}
+
+.box-item {
+  box-sizing: content-box;
+  padding: 0 25px;
+  border-radius: 40px;
+  margin: 15px 20px 0px 20px;
+  box-shadow: 7px 9px 5px 4px rgba(0, 0, 0, 0.08);
+  position: relative;
+  align-items: center;
+}
+
+#faqflush .accordion-item {
+    padding: 0 150px;
+  }
+
+@media (max-width: 991px) {
+  #faqflush .accordion-item {
+    padding: 0 0px;
+  }
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+    <title id="title">Wifi Account Status</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap CSS +  -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fontello.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+	<div id="loginhome" class="d-flex align-items-center vh-100" style="overflow-y: hidden;">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">YEY! Login auto confirmed and you are connected.</h4>
+                    <hr>
+                    <p>Press the button below to see your account status</p>
+                    <a id="stats" class="btn btn-outline-info btn-lg" role="button" data-bs-toggle="modal"><i class="icon-user-circle"></i>View your account status</a>
+                    <a id="dst" class="btn btn-outline-secondary btn-lg" role="button" data-bs-toggle="modal"><i class="icon-cancel-circled"></i>Exit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+	<!-- jQuery first, then Bootstrap JS -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $("#stats").click(function() {
+          location.replace('$(link-status)')
+        });
+
+        $("#dst").click(function() {
+          location.replace('$(link-orig)')
+        });
+    </script>  
+</body>
+
+</html>
