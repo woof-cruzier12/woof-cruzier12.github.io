@@ -1,60 +1,270 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>QR Code Scanner</title>
-    <meta name="description" content="QR Code Scanner built in kaybigan.hotspot">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link rel="stylesheet" href="./css/qrstyles.css">
-    <script src="./js/qr_packed.js"></script>
-    <script data-ad-client="ca-pub-8705800182105604" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  </head>
-  <body>
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    <div id="container">
-      <h1>QR Code Scanner</h1>
-	  <h2>Note: Camera permission is needed in order to scan a QR Code.</h2>
-	  <p>Tap the QR icon and when a popup box requesting Camera permissions appears, tap “Allow”.</p>
+<html lang="en">
 
-      <a id="btn-scan-qr">
-        <img src="./css/qr_icon.svg">
-      <a/>
+<head>
+    <title id="title">Sign in to Wifi Network</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fontello.css">
+    <link rel="stylesheet" href="css/style.css">
+	<script data-ad-client="ca-pub-8705800182105604" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
 
-      <canvas hidden="" id="qr-canvas"></canvas>
+<body>
+  	$(if chap-id)
+		<form name="sendin" action="$(link-login-only)" method="post">
+			<input type="hidden" name="username">
+			<input type="hidden" name="password">
+			<input type="hidden" name="dst" value="$(link-orig)">
+			<input type="hidden" name="popup" value="true">
+		</form>
+		<script src="md5.js"></script>
+		<script>
+            var _0x5b12=['1CDUnCl','#memuser','970004brwZGt','password','1061262ABRHnM','submit','val','#mempass','6337vVahSz','197702CKgOiB','#vcode','127guybbU','1NHpYUZ','$(chap-id)','sendin','username','$(chap-challenge)','8086ioeyTJ','1067863AppLwV','value','2502263QEZmkB'];var _0x2392=function(_0x45d347,_0x5902c1){_0x45d347=_0x45d347-0x185;var _0x5b129e=_0x5b12[_0x45d347];return _0x5b129e;};(function(_0x11932c,_0x48a4f6){var _0x4c481f=_0x2392;while(!![]){try{var _0x218160=-parseInt(_0x4c481f(0x185))+-parseInt(_0x4c481f(0x18a))+-parseInt(_0x4c481f(0x194))*-parseInt(_0x4c481f(0x18c))+parseInt(_0x4c481f(0x188))*-parseInt(_0x4c481f(0x190))+parseInt(_0x4c481f(0x191))+-parseInt(_0x4c481f(0x199))*parseInt(_0x4c481f(0x193))+parseInt(_0x4c481f(0x187));if(_0x218160===_0x48a4f6)break;else _0x11932c['push'](_0x11932c['shift']());}catch(_0x819534){_0x11932c['push'](_0x11932c['shift']());}}}(_0x5b12,0xa87b5));function doLogin1(){var _0xc98683=_0x2392;return document[_0xc98683(0x196)][_0xc98683(0x197)]['value']=$(_0xc98683(0x192))[_0xc98683(0x18e)](),document['sendin'][_0xc98683(0x18b)][_0xc98683(0x186)]=hexMD5('$(chap-id)'+$('#vcode')[_0xc98683(0x18e)]()+_0xc98683(0x198)),document[_0xc98683(0x196)][_0xc98683(0x18d)](),![];}function doLogin2(){var _0x38512b=_0x2392;return document[_0x38512b(0x196)][_0x38512b(0x197)][_0x38512b(0x186)]=$(_0x38512b(0x189))[_0x38512b(0x18e)](),document[_0x38512b(0x196)][_0x38512b(0x18b)][_0x38512b(0x186)]=hexMD5(_0x38512b(0x195)+$(_0x38512b(0x18f))['val']()+_0x38512b(0x198)),document[_0x38512b(0x196)][_0x38512b(0x18d)](),![];}
+		</script>
+	$(endif)
+    <header id="header">
+          <nav class="navbar navbar-expand-md fixed-top navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#"><img src="img/logo-top.png" alt="" width="120" height="40" class="d-inline-block align-top"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                        <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="#loginhome">Home</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="#feature">Internet Rates</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="#faq">F.A.Q.</a>
+                        </li>
+                    </ul>
+                    <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginform"><i class="icon-login"></i>Login</button></button>
+                </div>
+            </div>
+          </nav>
+    </header>
 
-      <div id="qr-result" hidden="">
-        <button onclick="verifier()">Verify QR code</button>
-        <span id="outputData" hidden=""></span>
+	<section id="loginhome" class="d-flex align-items-center bgimage">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1">
+                    <div class="container-fluid">
+                    <!-- Button trigger modal -->
+                    <h1>Welcome to the new look of KAYBIGAN_hotspot</h1>
+                    <h4>formerly LodiWifi Hotspot.</h4>
+                    <div class="container mt-2">
+                        $(if error)
+                            <div class="alert alert-danger" role="alert">
+                              $(error)
+                            </div>
+                        $(endif)
+                    </div>
+                    <a class="btn btn-primary btn-lg mt-4" data-bs-toggle="modal" href="#loginform"><i class="icon-login"></i>Login</a>
+		    <a class="btn btn-dark btn-lg mt-4" data-bs-toggle="modal" onclick="window.location='qr.html'"><i class="icon-qrcode"></i>Scan QR code</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 ads">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="feature" class="d-flex align-items-center">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hotspot Internet Packages</h2>
+            </div>
+            <div class="row align-items-start">
+                <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1">
+                    <div class="text-center">
+                        <h3>UNLInet Packages</h3>
+                        <p>Best for surfing and stream YouTube, Netflix, etc.</p>
+                    </div>
+                    <div class="box-item">
+                        <div class="row">
+                        <div class="col-auto me-auto mt-2">
+                            <h3>6 Hours UNLI</h3>
+                            <p class="text-muted">UNLIMITED Data</p>
+                        </div>
+                        <div class="col-auto mt-2"><h3>₱ 15</h3></div>
+                        </div>
+                    </div>
+                    <div class="box-item">
+                        <div class="row">
+                        <div class="col-auto me-auto mt-2">
+                            <h3>1 Day UNLI</h3>
+                            <p class="text-muted">UNLIMITED Data</p>
+                        </div>
+                        <div class="col-auto mt-2"><h3>₱ 45</h3></div>
+                        </div>
+                    </div>
+                    <div class="box-item">
+                        <div class="row">
+                        <div class="col-auto me-auto mt-2">
+                            <h3>7 Day UNLI</h3>
+                            <p class="text-muted">UNLIMITED Data</p>
+                        </div>
+                        <div class="col-auto mt-2"><h3>₱ 60</h3></div>
+                        </div>
+                    </div>
+                    <div class="box-item">
+                        <div class="row">
+                        <div class="col-auto me-auto mt-2">
+                            <h3>14 Day UNLI</h3>
+                            <p class="text-muted">UNLIMITED Data</p>
+                        </div>
+                        <div class="col-auto mt-2"><h3>₱ 120</h3></div>
+                        </div>
+                    </div>
+                    <div class="box-item">
+                        <div class="row">
+                        <div class="col-auto me-auto mt-2">
+                            <h3>30 Day UNLI</h3>
+                            <p class="text-muted">UNLIMITED Data</p>
+                        </div>
+                        <div class="col-auto mt-2"><h3>₱ 200</h3></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2">
+                    <div class="text-center">
+                        <h3>Tipid Data Packages</h3>
+                        <p>Para sa sulit na internet, gaming at matagalang validity</p>
+                    </div>
+                    <div class="box-item">
+                        <div class="row">
+                        <div class="col-auto me-auto mt-2">
+                            <h3>1 GB</h3>
+                            <p class="text-muted">3 Days Validity</p>
+                        </div>
+                        <div class="col-auto mt-2"><h3>₱ 10</h3></div>
+                        </div>
+                    </div>
+                    <div class="box-item">
+                        <div class="row">
+                        <div class="col-auto me-auto mt-2">
+                            <h3>3 GB</h3>
+                            <p class="text-muted">6 Days Validity</p>
+                        </div>
+                        <div class="col-auto mt-2"><h3>₱ 20</h3></div>
+                        </div>
+                    </div>
+                    <div class="box-item">
+                        <div class="row">
+                        <div class="col-auto me-auto mt-2">
+                            <h3>6 GB</h3>
+                            <p class="text-muted">9 Days Validity</p>
+                        </div>
+                        <div class="col-auto mt-2"><h3>₱ 40</h3></div>
+                        </div>
+                    </div>
+                    <div class="box-item">
+                        <div class="row">
+                        <div class="col-auto me-auto mt-2">
+                            <h3>10 GB</h3>
+                            <p class="text-muted">12 Days Validity</p>
+                        </div>
+                        <div class="col-auto mt-2"><h3>₱ 60</h3></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="d-flex align-items-center section-bg">
+        <div class="container">
+        <div class="section-title">
+            <h2>This page is now improving!</h2>
+            <p>Magkakaroon pa ng malaking pagbabago sa site na ito. Kung may katanungan sa paggamit ng serbisyo, mangyaring ipaalam na sa Administrator.</p>
+        </div>
+    </section>
+
+    <div class="modal fade" id="loginform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title" id="login">Sign in to Wifi Network<i class="icon-signal"></i></h6>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs" id="loginType" role="tablist">
+                <li class="nav-item"><button class="nav-link active" id="voucher-tab" data-bs-toggle="tab" data-bs-target="#voucher" type="button" role="tab" aria-controls="voucher" aria-selected="true">Voucher</button></li>
+                <li class="nav-item"><button class="nav-link" id="userpass-tab" data-bs-toggle="tab" data-bs-target="#userpass" type="button" role="tab" aria-controls="userpass" aria-selected="false">Member</button></li>
+                <li class="nav-item">$(if trial == 'yes')<button class="nav-link" id="trial-tab" data-bs-toggle="tab" data-bs-target="#trial" type="button" role="tab" aria-controls="trial" aria-selected="false">Trial</button>$(endif)</li>
+            </ul>
+            <div class="tab-content" id="loginContent">
+                <div class="tab-pane fade show active" id="voucher" role="tabpanel" aria-labelledby="voucher-tab">
+                    <div class="mt-3"><h5>Login using Voucher</h5></div>
+                    <form autocomplete="off" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin1()" $(endif)>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="icon-ticket"></i></div>
+                                <input type="text" class="form-control" id="vcode" aria-describedby="vouchHelp" placeholder="Enter voucher code" value="$(username)"/>
+                            </div>
+                            <small id="vouchHelp" class="fst-italic">For username and password credentials, use Member tab.</small>
+                        </div>
+                        <div class="mb-2">
+                        <button type="submit" class="btn btn-success btn-lg"><i class="icon-login"></i>Login</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="userpass" role="tabpanel" aria-labelledby="userpass-tab">
+                    <div class="mt-3"><h5>Member Login</h5></div>
+                    <form autocomplete="off" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin2()" $(endif)>
+                        <div class="form-group">
+                            <div class="mb-3">
+                                <label for="user">Username</label>
+                                <div class="input-group">
+                                    <div class="input-group-text"><i class="icon-user-circle"></i></div>
+                                    <input type="text" class="form-control" id="memuser" placeholder="Username" value="$(username)"/>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pass">Password</label>
+                                <div class="input-group">
+                                    <div class="input-group-text"><i class="icon-key"></i></div>
+                                    <input type="password" class="form-control" id="mempass" placeholder="Password"/>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                            <button type="submit" class="btn btn-success btn-lg"><i class="icon-login"></i>Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                $(if trial == 'yes')
+                <div class="tab-pane fade" id="trial" role="tabpanel" aria-labelledby="trial-tab">
+                    <div class="mt-3"><h5>Free Trial</h5></div>
+                    <div class="d-grid gap-2">
+                    <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)" class="btn btn-info" role="button">Continue to Facebook</a>
+                    </div>
+                    <br>
+                </div>
+                $(endif)
+            </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+          </div>
+        </div>
       </div>
     </div>
-    <script src="./js/qrCodeScanner.js" async defer></script>
+	<!-- jQuery first, then Bootstrap JS -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script>
-      function isValidURL(string) {
-        var res = string.match(/http:\/\/kaybigan\.hotspot\/login\?/);
-        return (res !== null)
-      };
-
-      function login() {
-      var logger = document.getElementById("outputData").innerText;
-      window.location.href = logger;
-      };
-
-      function verifier() {
-      var two = document.getElementById("outputData").innerText;
-      if (isValidURL(two) === false) {
-        qrResult.hidden = true;
-        alert("Incorrect QR Reading! Please try again or use legitimate QR Codes.")
-      } else {
-        login();
-      }
-      };
+    console.log("Hi coder! What are u doin in developer's console? Btw, I just want you to see this COVID-19 statistics in the Philippines.")
+    $(document).ready(function(){
+        $.getJSON('https://coronavirus-19-api.herokuapp.com/countries/Philippines', function(data){
+            console.table(data);
+        });
+    });
     </script>
-  </body>
+</body>
+
 </html>

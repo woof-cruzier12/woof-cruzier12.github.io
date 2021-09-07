@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+    <title id="title">Logout</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap CSS +  -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fontello.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>  
+<div class="d-flex align-items-center vh-100" style="overflow-y: hidden;">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col align-self-center">
+                <h2>You have been logged out!</h2>
+                <div class="d-grid gap-2 d-md-block">
+                <a id="goback" class="btn btn-success btn-lg" role="button" data-bs-toggle="modal"><i class="icon-login"></i>Go back to login page</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+	<!-- jQuery first, then Bootstrap JS -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $("#goback").click(function() {
+          location.replace('$(link-login)')
+        });
+    </script>    
+</body>
+
+</html>
