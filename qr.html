@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>QR Code Scanner</title>
+    <meta name="description" content="QR Code Scanner built in kaybigan.hotspot">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="stylesheet" href="./css/qrstyles.css">
+    <script src="./js/qr_packed.js"></script>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div id="container">
+      <h1>QR Code Scanner</h1>
+	  <h2>Note: Camera permission is needed in order to scan a QR Code.</h2>
+	  <p>Tap the QR icon and when a popup box requesting Camera permissions appears, tap “Allow”.</p>
+
+      <a id="btn-scan-qr">
+        <img src="./css/qr_icon.svg">
+      <a/>
+
+      <canvas hidden="" id="qr-canvas"></canvas>
+
+      <div id="qr-result" hidden="">
+        <button onclick="verifier()">Verify QR code</button>
+        <span id="outputData" hidden=""></span>
+      </div>
+    </div>
+    <script src="./js/qrCodeScanner.js" async defer></script>
+    <script>
+      function isValidURL(string) {
+        var res = string.match(/http:\/\/kaybigan\.hotspot\/login\?/);
+        return (res !== null)
+      };
+
+      function login() {
+      var logger = document.getElementById("outputData").innerText;
+      window.location.href = logger;
+      };
+
+      function verifier() {
+      var two = document.getElementById("outputData").innerText;
+      if (isValidURL(two) === false) {
+        qrResult.hidden = true;
+        alert("Incorrect QR Reading! Please try again or use legitimate QR Codes.")
+      } else {
+        login();
+      }
+      };
+    </script>
+  </body>
+</html>
