@@ -1,11 +1,8 @@
-{
-   "captive": $(if logged-in == 'yes')false$(else)true$(endif),
-   "user-portal-url": "$(link-login-only)",
-$(if session-timeout-secs != 0)
-   "seconds-remaining": $(session-timeout-secs),
-$(endif)
-$(if remain-bytes-total)
-   "bytes-remaining": $(remain-bytes-total),
-$(endif)
-   "can-extend-session": true
- }
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <script>
+	location.replace("http://kaybigan.hotspot/api.json");
+    </script>
+</body>
+</html>
