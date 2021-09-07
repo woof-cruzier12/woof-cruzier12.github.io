@@ -180,7 +180,7 @@
             <div class="tab-content" id="loginContent">
                 <div class="tab-pane fade show active" id="userpass" role="tabpanel" aria-labelledby="userpass-tab">
                     <div class="mt-3"><h5>Member Login</h5></div>
-                    <form autocomplete="off" action="http://10.0.0.1/login" onsubmit="checkit()">
+                    <form autocomplete="off" action="/" id="userpassform" onsubmit="verify()">
                         <div class="form-group">
                             <div class="mb-3">
                                 <label for="user">Username</label>
@@ -221,9 +221,12 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 	<script>
-    function checkit() {
-		alert($("#memuser").val())
-		alert($("#mempass").val())
+    function verify() {
+		var memuserj = $("#memuser").val();
+		var passj = $("#mempass").val();
+		var urlS = "http://10.0.0.1/login?username=" + encodeURIComponent(memuserj) + "&password=" + encodeURIComponent(passj);
+		alert(urlS)
+		$("#userpassform").attr('action', urlS);
 	}
     </script>
     <script>
