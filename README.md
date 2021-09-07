@@ -1,2 +1,2 @@
-# qrproject
-QR Code Scanner (for Local WiFi Hotspot AutoLogin)
+# Captive Portal
+Local WiFi Hotspot Login Page
