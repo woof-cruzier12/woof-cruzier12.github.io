@@ -1,21 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-	<!-- Required meta tags -->
+    <head>
+    <!-- Required meta tags -->
     <title id="title">Wifi Account Status</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Bootstrap CSS +  -->
+    <!-- Bootstrap CSS +  -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/fontello.css">
     <link rel="stylesheet" href="css/animation.css">
     <link rel="stylesheet" href="css/style.css">
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8705800182105604"
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8705800182105604"
      crossorigin="anonymous"></script>
-</head>
+    </head>
 
-<body>
+    <body>
     <header id="header">
           <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
             <div class="container">
@@ -36,14 +36,45 @@
             </div>
           </nav>
     </header>
-    
-    
-	<section id="loginhome" class="d-flex align-items-center">
+
+
+    <section id="loginhome" class="d-flex align-items-center">
         <div class="container mt-5">
             <div class="row align-items-center">
                 <div id="status" class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1">
                     <h2 style="color:black">Account Status</h2>
                     <div id="tablestats" class="container-fluid">
+                    <table class="table table-striped table-bordered">
+                        <tbody>
+                            <tr>
+                            <th scope="row" class="text-end">IP Address<i class="icon-signal"></i></th>
+                            <td id="ip"></td>
+                            </tr>
+                            <tr>
+                            <th scope="row" class="text-end">MAC Address<i class="icon-barcode"></i></th>
+                            <td id="mac"></td>
+                            </tr>
+                            <tr>
+                            <th scope="row" class="text-end">Total Upload<i class="icon-upload"></i></th>
+                            <td id="totalup"></td>
+                            </tr>
+                            <tr>
+                            <th scope="row" class="text-end">Total Download<i class="icon-download"></i></th>
+                            <td id="totaldown"></td>
+                            </tr>
+                            <tr>
+                            <th scope="row" class="text-end">Connection Uptime<i class="icon-mouse-pointer"></i></th>
+                            <td id="uptime"></td>
+                            </tr>
+                            <tr>
+                            <th scope="row" class="text-end">Remaining Time<i class="icon-stopwatch"></i></th>
+                            <td id="timeleft"></td>
+                            </tr>
+                            <tr>
+                            <th scope="row" class="text-end">Remaining Data<i class="animate-spin icon-arrows-cw"></i></th>
+                            <td id="dataleft"></td>
+                            </tr>
+                    </table>
                     </div>
                     <div>
                     <p class="fst-italic" style="color:black">Printed above is your account status as of <span id="datetime"></span>.</p>
@@ -58,7 +89,7 @@
             </div>
         </div>
     </section>
-    
+
     <section id="faq" class="d-flex align-items-center section-bg">
         <div class="container">
         <div class="section-title">
@@ -78,7 +109,7 @@
             </div>
         </div>
     </section>
-    
+
     <div class="modal fade" id="confirmlogout" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -96,25 +127,14 @@
             </div>
         </div>
     </div>
-    
-	<!-- jQuery first, then Bootstrap JS -->
+
+    <!-- jQuery first, then Bootstrap JS -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script>
-    $(document).ready(function(){
-		$.getJSON( 'http://kaybigan.hotspot/status.json', function( data ) {
-		  var items = [];
-		  $.each( data, function( key, val ) {
-			items.push("<tr><th scope='row' class='text-end'>" + key + "</th><td>" + val + "</td></tr>");
-		  });
-		  $( "<table/>", {
-			"class": "table table-striped table-bordered",
-			html: items.join( "" )
-		  }).appendTo( "#tablestats" );
-		});
-    });
-    </script>
-    <script>
+    <script>  
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    
         function refresh(time) {
             setTimeout("location.reload(true);", time);
             };
@@ -136,7 +156,13 @@
         });
             
         $("#datetime").html(new Date().toLocaleString());
+        $("#ip").html(urlParams.get('ip'));
+        $("#mac").html(urlParams.get('mac'));
+        $("#totalup").html(urlParams.get('totalup'));
+        $("#totaldown").html(urlParams.get('totaldown'));
+        $("#uptime").html(urlParams.get('uptime'));
+        $("#timeleft").html(urlParams.get('timeleft'));
+        $("#dataleft").html(urlParams.get('dataleft'));
     </script>
-</body>
-
-</html>
+    </body>
+    </html>
