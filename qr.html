@@ -20,15 +20,19 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <div id="container">
-      <h1>QR Code Scanner</h1>
-	  <h2>Note: Camera permission is needed in order to scan a QR Code.</h2>
-	  <p>Tap the QR icon and when a popup box requesting Camera permissions appears, tap “Allow”.</p>
+        <h1>QR Code Scanner</h1>
+        <h2>Note: Camera permission is needed in order to scan a QR Code.</h2>
+        <p>Tap the QR icon and when a popup box requesting Camera permissions appears, tap “Allow”.</p>
 
-      <a id="btn-scan-qr">
+        <div>
+        <button onclick="location.href='/'">Go Back to Login Page</button>
+        </div><br>
+
+        <a id="btn-scan-qr">
         <img src="./css/qr_icon.svg">
-      <a/>
+        <a/>
 
-      <canvas hidden="" id="qr-canvas"></canvas>
+        <canvas hidden="" id="qr-canvas"></canvas>
 
       <div id="qr-result" hidden="">
         <button onclick="verifier()">Verify QR code</button>
