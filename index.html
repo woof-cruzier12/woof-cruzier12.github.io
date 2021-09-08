@@ -50,7 +50,7 @@
                     <h1>Welcome to KAYBIGAN_hotspot</h1>
                     <h4>Please Sign-in your credentials below.</h4>
                     <a class="btn btn-primary btn-lg mt-4" data-bs-toggle="modal" href="#loginform"><i class="icon-login"></i> Member Login</a>
-					<a class="btn btn-dark btn-lg mt-4" data-bs-toggle="modal" onclick="window.location='qr.html'"><i class="icon-qrcode"></i>Scan Voucher QR code</a>
+					<a href="qr.html" class="btn btn-dark btn-lg mt-4" role="button" ><i class="icon-qrcode"></i>Scan Voucher QR code</a>
                     </div>
                 </div>
                 <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2">
@@ -221,13 +221,13 @@
                 <div class="tab-pane fade" id="trial" role="tabpanel" aria-labelledby="trial-tab">
                     <div class="mt-3"><h5>Free Trial</h5></div>
                     <div class="d-grid gap-2">
-                    <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)" class="btn btn-info disabled" role="button">Continue and Watch an Ad</a>
+                    <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)" class="btn btn-info disabled" role="button" aria-disabled="true">Continue and Watch an Ad</a>
                     </div>
                     <br>
                 </div>
             </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Close</button>
                 </div>
           </div>
         </div>
@@ -246,5 +246,4 @@
 	}
     </script>
 </body>
-
 </html>
