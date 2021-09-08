@@ -10,9 +10,15 @@
 	<meta name="keywords" content="hotspot, kaybigan.hotspot, captive-portal, mikrotik hotspot" />
     <meta name="robots" content="index, follow" />
     <!-- due to hotspot walled garden restriction, all css,js should be in local file -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/fontello.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="preload" href="css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="css/fontello.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/fontello.css">
+        <link rel="stylesheet" href="css/style.css">
+    </noscript>
+
 </head>
 
 <body>
