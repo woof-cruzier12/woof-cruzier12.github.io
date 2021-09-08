@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="css/fontello.css">
     <link rel="stylesheet" href="css/animation.css">
     <link rel="stylesheet" href="css/style.css">
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8705800182105604"
+     crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -41,42 +43,7 @@
             <div class="row align-items-center">
                 <div id="status" class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1">
                     <h2 style="color:black">Account Status</h2>
-                    <div class="container-fluid">
-                    <table class="table table-striped table-bordered">
-                        <tbody>
-                            <tr>
-                            <th scope="row" class="text-end">IP Address<i class="icon-signal"></i></th>
-                            <td>$(ip)</td>
-                            </tr>
-                            <tr>
-                            <th scope="row" class="text-end">MAC Address<i class="icon-barcode"></i></th>
-                            <td>$(mac)</td>
-                            </tr>
-                            <tr>
-                            <th scope="row" class="text-end">Total Upload<i class="icon-upload"></i></th>
-                            <td>$(bytes-in-nice)</td>
-                            </tr>
-                            <tr>
-                            <th scope="row" class="text-end">Total Download<i class="icon-download"></i></th>
-                            <td>$(bytes-out-nice)</td>
-                            </tr>
-                            <tr>
-                            <th scope="row" class="text-end">Connection Uptime<i class="icon-mouse-pointer"></i></th>
-                            <td>$(uptime)</td>
-                            </tr>
-                            $(if session-time-left)
-                            <tr>
-                            <th scope="row" class="text-end">Remaining Time<i class="icon-stopwatch"></i></th>
-                            <td>$(session-time-left)</td>
-                            </tr>
-                            $(endif)
-                            $(if remain-bytes-total)
-                            <tr>
-                            <th scope="row" class="text-end">Remaining Data<i class="animate-spin icon-arrows-cw"></i></th>
-                            <td>$(remain-bytes-total-nice)</td>
-                            </tr>
-                            $(endif)
-                    </table>
+                    <div id="tablestats" class="container-fluid">
                     </div>
                     <div>
                     <p class="fst-italic" style="color:black">Printed above is your account status as of <span id="datetime"></span>.</p>
@@ -134,13 +101,27 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
+    $(document).ready(function(){
+		$.getJSON( 'https://woof-cruzier12.github.io/status.json', function( data ) {
+		  var items = [];
+		  $.each( data, function( key, val ) {
+			items.push("<tr><th scope='row' class='text-end'>" + key + "</th><td>" + val + "</td></tr>");
+		  });
+		  $( "<table/>", {
+			"class": "table table-striped table-bordered",
+			html: items.join( "" )
+		  }).appendTo( "#tablestats" );
+		});
+    });
+    </script>
+    <script>
         function refresh(time) {
             setTimeout("location.reload(true);", time);
             };
             
         function logout(time) {
             setTimeout(function(){
-            location.replace('$(link-logout)?erase-cookie=on');
+            location.replace('http://kaybigan.hotspot/logout?erase-cookie=on');
             }, time);
             };
             
