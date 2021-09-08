@@ -136,7 +136,9 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 
     function refresh(time) {
-        setTimeout("location.reload(true);", time);
+        setTimeout(function(){
+        location.replace('http://kaybigan.hotspot/status');
+        }, time);
         };
         
     function logout(time) {
