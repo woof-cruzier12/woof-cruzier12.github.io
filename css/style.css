@@ -62,7 +62,7 @@ section {
 }
 
 .bgimage{
-  background-image: url('../img/background.png');
+  background-image: url('../img/background.webp');
   background-size: cover;
   background-repeat: no-repeat;
 }
