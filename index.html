@@ -196,14 +196,15 @@
           </div>
           <div class="modal-body">
             <ul class="nav nav-tabs" id="loginType" role="tablist">
-                <li class="nav-item"><button class="nav-link active" id="userpass-tab" data-bs-toggle="tab" data-bs-target="#userpass" type="button" role="tab" aria-controls="userpass" aria-selected="false">Member</button></li>
+                <li class="nav-item"><button class="nav-link active" id="userpass-tab" data-bs-toggle="tab" data-bs-target="#userpass" type="button" role="tab" aria-controls="userpass" aria-selected="true">Member</button></li>
+                <li class="nav-item"><button class="nav-link" id="voucher-tab" data-bs-toggle="tab" data-bs-target="#voucher" type="button" role="tab" aria-controls="voucher" aria-selected="false">Voucher</button></li>
                 <li class="nav-item"><button class="nav-link" id="trial-tab" data-bs-toggle="tab" data-bs-target="#trial" type="button" role="tab" aria-controls="trial" aria-selected="false">Free Internet</button></li>
             </ul>
             <div class="tab-content" id="loginContent">
                 <div class="tab-pane fade show active" id="userpass" role="tabpanel" aria-labelledby="userpass-tab">
                     <div class="mt-3"><h5>Member Login</h5></div>
-                    <form id="userpassform" onsubmit="return verify()">
-                        <div class="form-group">
+                    <form id="userpassform" autocomplete="off" onsubmit="return verify()">
+                        <div class="form-group" aria-describedby="memberHelp">
                             <div class="mb-3">
                                 <label for="user">Username</label>
                                 <div class="input-group">
@@ -217,10 +218,26 @@
                                     <div class="input-group-text"><i class="icon-key"></i></div>
                                     <input type="password" class="form-control" id="mempass" placeholder="Password"/>
                                 </div>
+                                <small id="memberHelp" class="fst-italic">For voucher credentials, use Voucher tab.</small>
                             </div>
                             <div class="mb-2">
                             <button type="submit" class="btn btn-success btn-lg"><i class="icon-login"></i>Login</button>
                             </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="voucher" role="tabpanel" aria-labelledby="voucher-tab">
+                    <div class="mt-3"><h5>Login using Voucher</h5></div>
+                    <form id="voucherform" autocomplete="off" onSubmit="return verify2()">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="icon-ticket"></i></div>
+                                <input type="text" class="form-control" id="vcode" aria-describedby="vouchHelp" placeholder="Enter voucher code"/>
+                            </div>
+                            <small id="vouchHelp" class="fst-italic">For username and password credentials, use Member tab.</small>
+                        </div>
+                        <div class="mb-2">
+                        <button type="submit" class="btn btn-success btn-lg"><i class="icon-login"></i>Login</button>
                         </div>
                     </form>
                 </div>
@@ -247,6 +264,13 @@
 		var memuserj = $("#memuser").val();
 		var passj = $("#mempass").val();
 		var urlS = "http://kaybigan.hotspot/login?username=" + encodeURIComponent(memuserj) + "&password=" + encodeURIComponent(passj);
+		location.href = urlS;
+		return false
+	}
+
+    function verify2() {
+		var vc = $("#vcode").val();
+		var urlS = "http://kaybigan.hotspot/login?username=" + encodeURIComponent(vc) + "&password=" + encodeURIComponent(vc);
 		location.href = urlS;
 		return false
 	}
