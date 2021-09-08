@@ -1,9 +1,0 @@
-{
-	"IP Address: ": "$ip",
-	"MAC Address: ": "$(mac)",
-	"Total Upload: ": "$(bytes-in-nice)",
-	"Total Download: ": "$(bytes-out-nice)",
-	"Uptime: ": "$(uptime)",
-	"Time Left: ": "$(session-time-left)",
-	"Data Remaining: ": "$(remain-bytes-total-nice)"
-}
