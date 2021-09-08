@@ -102,7 +102,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script>
     $(document).ready(function(){
-		$.getJSON( 'https://woof-cruzier12.github.io/status.json', function( data ) {
+		$.getJSON( 'http://kaybigan.hotspot/status.json', function( data ) {
 		  var items = [];
 		  $.each( data, function( key, val ) {
 			items.push("<tr><th scope='row' class='text-end'>" + key + "</th><td>" + val + "</td></tr>");
