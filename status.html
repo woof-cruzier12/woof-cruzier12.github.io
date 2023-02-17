@@ -28,16 +28,6 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#loginhome">Status</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#faq">F.A.Q.</a>
-                    </li>
-                </ul>
-            </div>
         </div>
       </nav>
 </header>
@@ -95,26 +85,6 @@
     </div>
 </section>
 
-<section id="faq" class="d-flex align-items-center section-bg">
-    <div class="container">
-    <div class="section-title">
-        <h2>Frequently Asked Questions</h2>
-        <p>Narito ang mga sagot sa mga nahihirapan sa pag-login at iba pang mga katanungan sa paggamit ng aming serbisyo.</p>
-    </div>
-    <div class="accordion accordion-flush" id="faqflush">
-        <div class="accordion-item">
-        <h2 class="accordion-header" id="faqOne">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapseOne" aria-expanded="false" aria-controls="faq-collapseOne">
-        Question not defined
-        </button>
-        </h2>
-        <div id="faq-collapseOne" class="accordion-collapse collapse" aria-labelledby="faqOne" data-bs-parent="#faqflush">
-        <div class="accordion-body">Unable to answer</div>
-        </div>
-        </div>
-    </div>
-</section>
-
 <div class="modal fade" id="confirmlogout" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -153,7 +123,7 @@ const urlParams = new URLSearchParams(queryString);
         };
         
     $("#refresh").click(function() {
-      $( this ).addClass("disabled").html('<i class="animate-spin icon-spin4" role="status" aria-hidden="true"></i>' + 'Refreshing...');
+      $( this ).addClass("disabled").html('<i class="animate-spin icon-spin4" role="status" aria-hidden="true"></i>' + 'Please wait...');
       $("#logout").addClass("disabled")
     });
     
