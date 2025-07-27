@@ -18,12 +18,12 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: rjgozon.live
+title: Woof Cruzier12's Blog
 email: 64195987+woof-cruzier12@users.noreply.github.com
-description: test live for blog
-domain: rjgozon.live
-baseurl: https://rjgozon.live # the subpath of your site, e.g. /blog
-url: /woof-cruzier12.github.io/ # the base hostname & protocol for your site, e.g. http://example.com
+description: blog about my life, my work, and my thoughts
+domain: woof-cruzier12.github.io
+baseurl: /woof-cruzier12.github.io/ # the subpath of your site, e.g. /blog
+url: https://woof-cruzier12.github.io/ # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: woof-cruzier12
 github_username:  woof-cruzier12
 
