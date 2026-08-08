@@ -1,0 +1,10 @@
+---
+layout: default
+title:  "HPGE Answer Sheet"
+date:   2026-08-09 00:00:00 +0800
+categories: 
+answer_key_file: keys_HPGE-01
+sheet_title: HPGE Answer Sheet
+---
+
+{% include tracker-sheet.html answer_key_file=page.answer_key_file sheet_title=page.sheet_title %}

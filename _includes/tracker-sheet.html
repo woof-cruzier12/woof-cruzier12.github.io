@@ -1,0 +1,193 @@
+{% assign answer_key_file = include.answer_key_file | default: page.answer_key_file | default: 'keys' %}
+{% assign sheet_data = site.data[answer_key_file] %}
+{% assign sheet_title = include.sheet_title | default: page.sheet_title | default: sheet_data.title %}
+
+<div class="sheet-container container-lg py-4">
+  <div class="text-center mb-4">
+    <h1 class="display-6 fw-bold mb-2">{{ sheet_title }}</h1>
+    <p class="text-body-secondary mb-0">Pick an answer for each row, then submit to grade your sheet.</p>
+  </div>
+
+  <!-- Score Board Banner -->
+  <div id="score-card" class="score-card card shadow-sm border-0 hidden d-none mb-4">
+    <div class="card-body text-center">
+      <div class="score-display">
+      Score: <span id="user-score">0</span> / {{ sheet_data.answers | size }}
+      </div>
+      <div id="score-percentage" class="score-percentage">0%</div>
+      <div id="score-result" class="score-result mt-2"></div>
+    </div>
+  </div>
+
+  <div id="validation-alert" class="alert alert-warning hidden d-none mb-4" role="alert"></div>
+
+  {% assign options = "A,B,C,D" | split: "," %}
+  {% assign question_count = sheet_data.answers | size %}
+  {% assign split_index = question_count | plus: 1 | divided_by: 2 %}
+
+  <form id="bubble-form" class="bubble-form mx-auto vstack gap-3">
+    <div class="row g-3 justify-content-center">
+      <div class="col-12 col-lg-6">
+        <div class="vstack gap-3">
+          {% for answer in sheet_data.answers limit: split_index %}
+            <div class="q-row card shadow-sm border-0" data-qnum="{{ forloop.index }}" data-key="{{ answer }}">
+              <div class="card-body d-flex flex-column flex-md-row align-items-md-center gap-3">
+                <span class="q-num badge text-bg-dark rounded-pill">{{ forloop.index }}</span>
+
+                <div class="bubble-group d-flex flex-wrap gap-2 flex-grow-1">
+                  {% for option in options %}
+                    <label class="bubble-label">
+                      <input type="radio" name="q{{ forloop.parentloop.index }}" value="{{ option }}">
+                      <span class="bubble">{{ option }}</span>
+                    </label>
+                  {% endfor %}
+                </div>
+
+                <!-- Status indicator icon (correct/incorrect) -->
+                <span class="status-icon fs-4 fw-bold"></span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="vstack gap-3">
+          {% for answer in sheet_data.answers offset: split_index %}
+            {% assign question_number = forloop.index | plus: split_index %}
+            <div class="q-row card shadow-sm border-0" data-qnum="{{ question_number }}" data-key="{{ answer }}">
+              <div class="card-body d-flex flex-column flex-md-row align-items-md-center gap-3">
+                <span class="q-num badge text-bg-dark rounded-pill">{{ question_number }}</span>
+
+                <div class="bubble-group d-flex flex-wrap gap-2 flex-grow-1">
+                  {% for option in options %}
+                    <label class="bubble-label">
+                      <input type="radio" name="q{{ question_number }}" value="{{ option }}">
+                      <span class="bubble">{{ option }}</span>
+                    </label>
+                  {% endfor %}
+                </div>
+
+                <!-- Status indicator icon (correct/incorrect) -->
+                <span class="status-icon fs-4 fw-bold"></span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions d-flex flex-column flex-sm-row gap-2 pt-2">
+      <button type="button" id="submit-btn" class="btn btn-primary btn-lg flex-fill" onclick="gradeSheet()">Submit & Grade</button>
+      <button type="button" id="reset-btn" class="btn btn-outline-secondary btn-lg flex-fill" onclick="resetSheet()">Reset</button>
+    </div>
+  </form>
+</div>
+
+<script>
+$(function () {
+  const allowIncompleteSubmit = false;
+
+  window.gradeSheet = function () {
+    const rows = $('.q-row');
+    const validationAlert = $('#validation-alert');
+    const scoreResult = $('#score-result');
+    const scoreCard = $('#score-card');
+    let score = 0;
+    let total = rows.length;
+    const missingRows = [];
+
+    validationAlert.addClass('hidden d-none');
+    validationAlert.text('');
+    scoreResult.text('');
+    scoreCard.removeClass('result-failed result-qualifying result-good result-very-good result-outstanding');
+
+    rows.each(function () {
+      const row = $(this);
+      row.removeClass('correct incorrect border border-warning');
+      row.find('.status-icon').text('').removeAttr('style');
+      row.find('input[type="radio"]').removeAttr('data-is-correct');
+    });
+
+    rows.each(function () {
+      const row = $(this);
+      const selectedInput = row.find('input[type="radio"]:checked');
+
+      if (!selectedInput.length) {
+        missingRows.push(this);
+      }
+    });
+
+    if (missingRows.length > 0 && !allowIncompleteSubmit) {
+      validationAlert.text(`Please answer all ${missingRows.length} remaining question${missingRows.length === 1 ? '' : 's'} before submitting.`);
+      validationAlert.removeClass('hidden d-none');
+      missingRows[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    rows.each(function () {
+      const row = $(this);
+      const correctKey = row.data('key');
+      const selectedInput = row.find('input[type="radio"]:checked');
+      const statusIcon = row.find('.status-icon');
+
+      row.removeClass('correct incorrect');
+
+      row.find('input[type="radio"]').each(function () {
+        $(this).attr('data-is-correct', this.value === correctKey);
+      });
+
+      row.removeClass('border border-warning');
+
+      if (selectedInput.val() === correctKey) {
+        score++;
+        row.addClass('correct');
+        statusIcon.text('✓').css('color', '#16a34a');
+      } else {
+        row.addClass('incorrect');
+        statusIcon.text('✗').css('color', '#dc2626');
+      }
+    });
+
+    const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
+    let resultLabel = 'Failed';
+
+    if (percentage >= 90) {
+      resultLabel = 'Outstanding';
+      scoreCard.addClass('result-outstanding');
+    } else if (percentage >= 75) {
+      resultLabel = 'Very Good';
+      scoreCard.addClass('result-very-good');
+    } else if (percentage >= 70) {
+      resultLabel = 'Good Score (Area on General Weighted Average)';
+      scoreCard.addClass('result-good');
+    } else if (percentage > 50) {
+      resultLabel = 'Qualifying (Minimum Subject Rating)';
+      scoreCard.addClass('result-qualifying');
+    } else {
+      scoreCard.addClass('result-failed');
+    }
+
+    $('#user-score').text(score);
+    $('#score-percentage').text(`${percentage}%`);
+    scoreResult.text(resultLabel);
+    scoreCard.removeClass('hidden d-none');
+
+    scoreCard[0].scrollIntoView({ behavior: 'smooth' });
+  };
+
+  window.resetSheet = function () {
+    $('#bubble-form')[0].reset();
+    $('#score-card').addClass('hidden d-none').removeClass('result-failed result-qualifying result-good result-very-good result-outstanding');
+    $('#validation-alert').addClass('hidden d-none').text('');
+    $('#score-result').text('');
+
+    $('.q-row').each(function () {
+      const row = $(this);
+      row.removeClass('correct incorrect border border-warning');
+      row.find('.status-icon').text('').removeAttr('style');
+      row.find('input[type="radio"]').removeAttr('data-is-correct');
+    });
+  };
+});
+</script>
