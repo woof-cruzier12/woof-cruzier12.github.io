@@ -1,0 +1,93 @@
+---
+layout: default
+title: Interactive Answer Sheet
+---
+
+<div class="sheet-container">
+  <h2>{{ site.data.keys.title }}</h2>
+
+  <!-- Score Board Banner -->
+  <div id="score-card" class="score-card hidden">
+    <div class="score-display">
+      Score: <span id="user-score">0</span> / {{ site.data.keys.total_questions }}
+    </div>
+    <div id="score-percentage" class="score-percentage">0%</div>
+  </div>
+
+  <form id="bubble-form">
+    {% for q in site.data.keys.answers %}
+      <div class="q-row" data-qnum="{{ q.num }}" data-key="{{ q.key }}">
+        <span class="q-num">{{ q.num }}.</span>
+        
+        <div class="bubble-group">
+          {% for option in "A,B,C,D" | split: "," %}
+            <label class="bubble-label">
+              <input type="radio" name="q{{ q.num }}" value="{{ option }}">
+              <span class="bubble">{{ option }}</span>
+            </label>
+          {% endfor %}
+        </div>
+        
+        <!-- Status indicator icon (correct/incorrect) -->
+        <span class="status-icon"></span>
+      </div>
+    {% endfor %}
+
+    <div class="form-actions">
+      <button type="button" id="submit-btn" onclick="gradeSheet()">Submit & Grade</button>
+      <button type="button" id="reset-btn" onclick="resetSheet()">Reset</button>
+    </div>
+  </form>
+</div>
+
+<script>
+function gradeSheet() {
+  const rows = document.querySelectorAll('.q-row');
+  let score = 0;
+  let total = rows.length;
+
+  rows.forEach(row => {
+    const correctKey = row.getAttribute('data-key');
+    const selectedInput = row.querySelector('input[type="radio"]:checked');
+    const statusIcon = row.querySelector('.status-icon');
+    
+    // Reset previous grading classes
+    row.classList.remove('correct', 'incorrect');
+    
+    // Tag all radio buttons in row so CSS can reveal correct key
+    row.querySelectorAll('input[type="radio"]').forEach(input => {
+      input.setAttribute('data-is-correct', input.value === correctKey);
+    });
+
+    if (selectedInput && selectedInput.value === correctKey) {
+      score++;
+      row.classList.add('correct');
+      statusIcon.textContent = '✓';
+      statusIcon.style.color = '#16a34a';
+    } else {
+      row.classList.add('incorrect');
+      statusIcon.textContent = '✗';
+      statusIcon.style.color = '#dc2626';
+    }
+  });
+
+  // Calculate percentage and reveal scoreboard
+  const percentage = Math.round((score / total) * 100);
+  document.getElementById('user-score').textContent = score;
+  document.getElementById('score-percentage').textContent = `${percentage}%`;
+  document.getElementById('score-card').classList.remove('hidden');
+  
+  // Scroll score card into view
+  document.getElementById('score-card').scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetSheet() {
+  document.getElementById('bubble-form').reset();
+  document.getElementById('score-card').classList.add('hidden');
+  
+  document.querySelectorAll('.q-row').forEach(row => {
+    row.classList.remove('correct', 'incorrect');
+    row.querySelector('.status-icon').textContent = '';
+  });
+}
+</script>
