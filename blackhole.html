@@ -1,63 +1,29 @@
+---
+layout: null
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Black Hole with Stars</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: black;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .black-hole {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 70%);
-            border-radius: 50%;
-            position: relative;
-            z-index: 10;
-        }
-        .star {
-            width: 2px;
-            height: 2px;
-            background-color: white;
-            border-radius: 50%;
-            position: absolute;
-            animation: twinkle 2s infinite;
-        }
-        @keyframes twinkle {
-            0%, 100% {
-                opacity: 0.2;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="black-hole"></div>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
     <script>
-        const body = document.body;
-
-        function createStar() {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            star.style.top = Math.random() * window.innerHeight + 'px';
-            star.style.left = Math.random() * window.innerWidth + 'px';
-            star.style.animationDuration = (Math.random() * 2 + 1) + 's';
-            body.appendChild(star);
-        }
-
-        for (let i = 0; i < 100; i++) {
-            createStar();
-        }
+      // Set theme based on system-wide dark mode preference (before page renders to avoid flash)
+      (function () {
+        var darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        var applyTheme = function () {
+          document.documentElement.setAttribute('data-bs-theme', darkModeQuery.matches ? 'dark' : 'light');
+        };
+        applyTheme();
+        // Live-update if the system theme changes while the page is open
+        darkModeQuery.addEventListener('change', applyTheme);
+      })();
     </script>
+</head>
+<body class="blackhole-page">
+    <div class="black-hole"></div>
+    <script src="{{ '/assets/js/blackhole.js' | relative_url }}"></script>
 </body>
 </html>

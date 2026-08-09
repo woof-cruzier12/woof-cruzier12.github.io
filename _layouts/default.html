@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% if page.title %}{{ page.title | escape }} | {{ site.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+
+    <script>
+      // Set theme based on saved preference or system dark mode (before page renders to avoid flash)
+      (function () {
+        var STORAGE_KEY = 'theme-preference';
+        var darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+        var getSavedTheme = function () {
+          try {
+            return localStorage.getItem(STORAGE_KEY);
+          } catch (e) {
+            return null;
+          }
+        };
+
+        var applyTheme = function (theme) {
+          document.documentElement.setAttribute('data-bs-theme', theme === 'dark' ? 'dark' : 'light');
+        };
+
+        var savedTheme = getSavedTheme();
+        applyTheme(savedTheme || (darkModeQuery.matches ? 'dark' : 'light'));
+
+        // Live-update if the system theme changes while the page is open (only when no saved preference)
+        darkModeQuery.addEventListener('change', function (e) {
+          if (!getSavedTheme()) {
+            applyTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      })();
+    </script>
+    <noscript>
+      <style>
+        /* Fallback: use CSS media query if JS is disabled */
+        @media (prefers-color-scheme: dark) {
+          :root { color-scheme: dark; }
+          html[data-bs-theme] { --bs-body-bg: #212529; --bs-body-color: #dee2e6; }
+        }
+      </style>
+    </noscript>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary">
+      <div class="container">
+        <a class="navbar-brand fw-semibold" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+        <div class="d-flex align-items-center order-lg-3">
+          <button class="btn btn-link nav-link p-1" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+            <i class="bi bi-moon-stars-fill fs-5" id="themeIconDark"></i>
+            <i class="bi bi-sun-fill fs-5" id="themeIconLight" style="display: none;"></i>
+          </button>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNav" aria-controls="siteNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse order-lg-2" id="siteNav">
+          <ul class="navbar-nav ms-auto gap-lg-2">
+            <li class="nav-item"><a class="nav-link" href="{{ '/' | relative_url }}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ '/about/' | relative_url }}">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="py-5">
+      <div class="container">
+        {{ content }}
+      </div>
+    </main>
+
+    <script>
+      // Toggle light/dark mode and persist the preference
+      (function () {
+        var STORAGE_KEY = 'theme-preference';
+
+        var applyTheme = function (theme) {
+          var isDark = theme === 'dark';
+          document.documentElement.setAttribute('data-bs-theme', isDark ? 'dark' : 'light');
+
+          var darkIcon = document.getElementById('themeIconDark');
+          var lightIcon = document.getElementById('themeIconLight');
+          if (darkIcon) darkIcon.style.display = isDark ? 'none' : '';
+          if (lightIcon) lightIcon.style.display = isDark ? '' : 'none';
+        };
+
+        // Sync icons with current theme on load
+        var currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'light';
+        applyTheme(currentTheme);
+
+        var toggle = document.getElementById('themeToggle');
+        if (toggle) {
+          toggle.addEventListener('click', function () {
+            var next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            try {
+              localStorage.setItem(STORAGE_KEY, next);
+            } catch (e) {}
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

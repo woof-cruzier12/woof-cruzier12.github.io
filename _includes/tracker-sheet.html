@@ -1,0 +1,122 @@
+{% assign answer_key_file = include.answer_key_file | default: page.answer_key_file | default: 'keys' %}
+{% assign sheet_data = site.data[answer_key_file] %}
+{% assign sheet_title = include.sheet_title | default: page.sheet_title | default: sheet_data.title %}
+
+{% comment %}
+  Obfuscate answer keys with a simple Caesar shift (+1) so they don't
+  appear in plaintext in the DOM / view-source. They are decoded back
+  inside assets/js/tracker-sheet.js when "Submit & Grade" is clicked.
+{% endcomment %}
+{% assign encoded_keys = '' %}
+{% for answer in sheet_data.answers %}
+  {% case answer %}
+    {% when 'A' %}{% assign encoded_keys = encoded_keys | append: 'B' %}
+    {% when 'B' %}{% assign encoded_keys = encoded_keys | append: 'C' %}
+    {% when 'C' %}{% assign encoded_keys = encoded_keys | append: 'D' %}
+    {% when 'D' %}{% assign encoded_keys = encoded_keys | append: 'E' %}
+  {% endcase %}
+{% endfor %}
+
+<div class="sheet-container container-lg py-4" data-answer-keys="{{ encoded_keys }}">
+  <div class="text-center mb-4">
+    <h1 class="display-6 fw-bold mb-2">{{ sheet_title }}</h1>
+    <p class="text-body-secondary mb-0">Pick an answer for each row, then submit to grade your sheet.</p>
+  </div>
+
+  <!-- Score Board Modal -->
+  <div class="modal fade" id="score-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div id="score-card" class="score-card card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h2 class="h5 fw-bold mb-3">Your Score</h2>
+          <div class="score-display">
+            Score: <span id="user-score">0</span> / {{ sheet_data.answers | size }}
+          </div>
+          <div id="score-percentage" class="score-percentage">0%</div>
+          <div id="score-result" class="score-result mt-2"></div>
+            <button type="button" class="btn btn-primary" id="show-answers-btn">Show Answers</button>
+            <button type="button" class="btn btn-outline-secondary" id="back-to-sheet-btn" data-bs-dismiss="modal">Back to Sheet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="validation-modal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-body text-center py-4">
+          <div id="validation-alert" class="alert alert-warning mb-3" role="alert"></div>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% assign options = "A,B,C,D" | split: "," %}
+  {% assign question_count = sheet_data.answers | size %}
+  {% assign split_index = question_count | plus: 1 | divided_by: 2 %}
+
+  <form id="bubble-form" class="bubble-form mx-auto vstack gap-3">
+    <div class="row g-3 justify-content-center">
+      <div class="col-12 col-lg-6">
+        <div class="vstack gap-3">
+          {% for answer in sheet_data.answers limit: split_index %}
+            <div class="q-row card shadow-sm border-0" data-qnum="{{ forloop.index }}">
+              <div class="card-body d-flex flex-column flex-md-row align-items-md-center gap-3">
+                <span class="q-num badge text-bg-dark rounded-pill">{{ forloop.index }}</span>
+
+                <div class="bubble-group d-flex flex-wrap gap-2 flex-grow-1">
+                  {% for option in options %}
+                    <label class="bubble-label">
+                      <input type="radio" name="q{{ forloop.parentloop.index }}" value="{{ option }}">
+                      <span class="bubble">{{ option }}</span>
+                    </label>
+                  {% endfor %}
+                </div>
+
+                <!-- Status indicator icon (correct/incorrect) -->
+                <span class="status-icon fs-4 fw-bold"></span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="vstack gap-3">
+          {% for answer in sheet_data.answers offset: split_index %}
+            {% assign question_number = forloop.index | plus: split_index %}
+            <div class="q-row card shadow-sm border-0" data-qnum="{{ question_number }}">
+              <div class="card-body d-flex flex-column flex-md-row align-items-md-center gap-3">
+                <span class="q-num badge text-bg-dark rounded-pill">{{ question_number }}</span>
+
+                <div class="bubble-group d-flex flex-wrap gap-2 flex-grow-1">
+                  {% for option in options %}
+                    <label class="bubble-label">
+                      <input type="radio" name="q{{ question_number }}" value="{{ option }}">
+                      <span class="bubble">{{ option }}</span>
+                    </label>
+                  {% endfor %}
+                </div>
+
+                <!-- Status indicator icon (correct/incorrect) -->
+                <span class="status-icon fs-4 fw-bold"></span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions d-flex flex-column flex-sm-row gap-2 pt-2">
+      <button type="button" id="submit-btn" class="btn btn-primary btn-lg flex-fill">Submit & Grade</button>
+      <button type="button" id="reset-btn" class="btn btn-outline-secondary btn-lg flex-fill">Reset</button>
+    </div>
+  </form>
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-4.0.0.min.js"
+  integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao="
+  crossorigin="anonymous"></script>
+<script src="{{ '/assets/js/tracker-sheet.js' | relative_url }}"></script>

@@ -3,40 +3,10 @@ permalink: /404.html
 layout: default
 ---
 
-<style type="text/css" media="screen">
-        .container {
-          text-align: center;
-          padding: 20px;
-          background: white;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          border-radius: 8px;
-        }
-        h1 {
-          font-size: 4em;
-          color: #ff6b6b;
-        }
-        p {
-          font-size: 1.2em;
-        }
-        .btn {
-          display: inline-block;
-          margin-top: 20px;
-          padding: 10px 20px;
-          background-color: #000000;
-          color: white;
-          text-decoration: none;
-          border-radius: 5px;
-          transition: background-color 0.3s;
-        }
-        .btn:hover {
-          background-color: #2980b9;
-        }
-</style>
-
-<div class="container">
+<div class="error-page">
     <h1>ooppsss!</h1>
-        <p><strong>404 - Page not found</strong></p>
-        <p>The requested page might be in another Earth's multiverse and could not be found here.</p>
-        <p>But don't worry, you can find your way back home!</p>
-        <a class="btn" href="/blackhole">Swirl me back to Blackhole</a>
+    <p><strong>404 - Page not found</strong></p>
+    <p>The requested page might be in another Earth's multiverse and could not be found here.</p>
+    <p>But don't worry, you can find your way back home!</p>
+    <a class="btn" href="{{ '/blackhole' | relative_url }}">Swirl me back to Blackhole</a>
 </div>

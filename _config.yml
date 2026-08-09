@@ -31,6 +31,12 @@ github_username:  woof-cruzier12
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-seo-tag
+
+# SASS / SCSS settings
+sass:
+  sass_dir: _sass
+  style: compressed
 
 # Exclude from processing.
 # The following items will not be processed, by default.

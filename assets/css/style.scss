@@ -1,0 +1,384 @@
+---
+---
+
+// ========== Variables ==========
+$color-text-primary: #18181b;
+$color-text-secondary: #52525b;
+$color-border: #e4e4e7;
+$color-bubble-border: #3f3f46;
+$color-white: #FAFAFA;
+
+$color-danger: #dc2626;
+$color-warning: #c2410c;
+$color-info: #2563eb;
+$color-teal: #0f766e;
+$color-success: #4CAF50;
+$color-amber: #FAFAFA;
+
+$color-success-bg: #dcfce7;
+$color-warning-bg: #fff7ed;
+
+$radius-card: 8px;
+$bubble-size: 34px;
+
+$font-weight-bold: 700;
+$font-weight-semibold: 600;
+
+// ========== Theme Toggle ==========
+#themeToggle {
+  color: rgba(255, 255, 255, 0.75);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  line-height: 1;
+
+  &:hover,
+  &:focus {
+    color: #ffffff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+// ========== Layout ==========
+.sheet-container {
+  max-width: 900px;
+  margin: 0 auto;
+
+  &.answers-revealed .bubble-label input[data-is-correct="true"] + .bubble {
+    background-color: $color-success-bg;
+    border-color: $color-success;
+    color: $color-success;
+    box-shadow: inset 0 0 0 1px rgba(22, 163, 74, 0.2);
+  }
+
+  @media (max-width: 991.98px) {
+    max-width: 100%;
+  }
+}
+
+.bubble-form {
+  width: 100%;
+  max-width: 1100px;
+
+  @media (max-width: 991.98px) {
+    max-width: 100%;
+  }
+}
+
+// ========== Score Result & Card ==========
+.score-result {
+  font-size: 1rem;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+#score-card {
+  &.result-failed .score-result {
+    color: $color-danger;
+  }
+
+  &.result-qualifying .score-result {
+    color: $color-warning;
+  }
+
+  &.result-good .score-result {
+    color: $color-info;
+  }
+
+  &.result-very-good .score-result {
+    color: $color-teal;
+  }
+
+  &.result-outstanding .score-result {
+    color: $color-success;
+  }
+}
+
+.score-card {
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-card;
+  padding: 16px;
+  text-align: center;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.score-display {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.score-percentage {
+  font-size: 1rem;
+  color: $color-text-secondary;
+  margin-top: 4px;
+}
+
+// ========== Question Row ==========
+.q-row {
+  background: $color-white;
+
+  .card-body {
+    @media (max-width: 991.98px) {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  &.unanswered .bubble {
+    border-color: $color-amber;
+    background-color: $color-warning-bg;
+    box-shadow: inset 0 0 0 1px rgba(217, 119, 6, 0.2);
+    transform: scale(1.03);
+  }
+
+  &.incorrect {
+    .bubble-label input[value][data-is-correct="true"] + .bubble {
+      border: 2px solid $color-success;
+      color: $color-success;
+      background-color: $color-success-bg;
+    }
+
+    .bubble-label input[type="radio"]:checked + .bubble {
+      background-color: $color-danger;
+      border-color: $color-danger;
+      color: $color-white;
+    }
+  }
+}
+
+.q-num {
+  font-weight: $font-weight-semibold;
+  width: 32px;
+}
+
+// ========== Bubble Inputs ==========
+.bubble-group {
+  display: flex;
+  gap: 12px;
+
+  @media (max-width: 991.98px) {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.bubble-label {
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  input[type="radio"]:checked + .bubble {
+    background-color: $color-text-primary;
+    color: $color-white;
+    border-color: $color-text-primary;
+  }
+}
+
+.bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $bubble-size;
+  height: $bubble-size;
+  border: 2px solid $color-bubble-border;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+// ========== Status Icon ==========
+.status-icon {
+  width: 24px;
+  font-weight: bold;
+  text-align: center;
+
+  @media (max-width: 991.98px) {
+    width: auto;
+    min-width: 24px;
+  }
+}
+
+// ========== Form Actions ==========
+.form-actions {
+  margin-top: 24px;
+
+  .btn {
+    font-weight: $font-weight-bold;
+  }
+}
+
+// ========== 404 Page ==========
+.error-page {
+  text-align: center;
+  padding: 20px;
+  background: $color-white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: $radius-card;
+
+  h1 {
+    font-size: 4em;
+    color: #ff6b6b;
+  }
+
+  p {
+    font-size: 1.2em;
+  }
+
+  .btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #000000;
+    color: $color-white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #2980b9;
+    }
+  }
+}
+
+// ========== Dark Mode (system preference) ==========
+// Bootstrap 5.3 sets `data-bs-theme="dark"` on <html> via JS in the layout.
+// These overrides adapt custom components to match the dark theme.
+
+html[data-bs-theme="dark"] {
+  // Override Bootstrap's `bg-light` utility for custom usage (e.g., About page)
+  .bg-light {
+    background-color: #2d333b !important;
+  }
+
+  // ========== Score Result & Card ==========
+  .score-result {
+    color: #e4e4e7;
+  }
+
+  .score-card {
+    background: #212529;
+    border-color: #3f3f46;
+  }
+
+  .score-percentage {
+    color: #a1a1aa;
+  }
+
+  // ========== Question Row ==========
+  .q-row {
+    background: #212529;
+
+    &.unanswered .bubble {
+      background-color: rgba(217, 119, 6, 0.15);
+      border-color: $color-amber;
+    }
+  }
+
+  // ========== Bubble Inputs ==========
+  .bubble-label {
+    input[type="radio"]:checked + .bubble {
+      background-color: #e4e4e7;
+      color: #18181b;
+      border-color: #e4e4e7;
+    }
+  }
+
+  .bubble {
+    border-color: #52525b;
+    color: #e4e4e7;
+  }
+
+  // ========== Success / Warning states ==========
+  .sheet-container.answers-revealed .bubble-label input[data-is-correct="true"] + .bubble {
+    background-color: rgba(22, 163, 74, 0.2);
+    border-color: $color-success;
+    color: #4ade80;
+    box-shadow: inset 0 0 0 1px rgba(74, 222, 128, 0.2);
+  }
+
+  .q-row {
+    &.incorrect {
+      .bubble-label input[value][data-is-correct="true"] + .bubble {
+        border-color: $color-success;
+        color: #4ade80;
+        background-color: rgba(22, 163, 74, 0.2);
+      }
+
+      .bubble-label input[type="radio"]:checked + .bubble {
+        background-color: $color-danger;
+        border-color: $color-danger;
+        color: #18181b;
+      }
+    }
+  }
+
+  // ========== 404 Page ==========
+  .error-page {
+    background: #212529;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+    h1 {
+      color: #ff6b6b;
+    }
+
+    .btn {
+      background-color: #18181b;
+      color: #e4e4e7;
+    }
+  }
+}
+
+// ========== Blackhole Page ==========
+.blackhole-page {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .black-hole {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 70%);
+    border-radius: 50%;
+    position: relative;
+    z-index: 10;
+  }
+
+  .star {
+    width: 2px;
+    height: 2px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    animation: twinkle 2s infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}
