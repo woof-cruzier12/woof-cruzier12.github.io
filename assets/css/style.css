@@ -42,20 +42,6 @@
   text-align: center;
 }
 
-#score-card.result-failed {
-}
-
-#score-card.result-qualifying {
-}
-
-#score-card.result-good {
-}
-
-#score-card.result-very-good {
-}
-
-#score-card.result-outstanding {
-}
 
 .score-card.hidden { display: none; }
 
@@ -115,9 +101,20 @@
   border-color: #18181b;
 }
 
+.sheet-container.answers-revealed .bubble-label input[data-is-correct="true"] + .bubble {
+  background-color: #dcfce7;
+  border-color: #16a34a;
+  color: #16a34a;
+  box-shadow: inset 0 0 0 1px rgba(22, 163, 74, 0.2);
+}
+
 /* Grading Results Styling */
-.q-row.correct { background-color: #f0fdf4; }
-.q-row.incorrect { background-color: #fef2f2; }
+.q-row.unanswered .bubble {
+  border-color: #d97706;
+  background-color: #fff7ed;
+  box-shadow: inset 0 0 0 1px rgba(217, 119, 6, 0.2);
+  transform: scale(1.03);
+}
 
 /* Highlight the correct answer if missed */
 .q-row.incorrect .bubble-label input[value][data-is-correct="true"] + .bubble {
@@ -146,9 +143,6 @@
 .form-actions .btn {
   font-weight: 700;
 }
-
-.q-row.correct .card-body { background-color: #f0fdf4; }
-.q-row.incorrect .card-body { background-color: #fef2f2; }
 
 @media (max-width: 991.98px) {
   .sheet-container {
