@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2026-08-09
+## ~~[Unreleased]~~ NOW LIVE - 2026-08-09
 
 ### Added
 - **Light/Dark Mode Toggle** (`_layouts/default.html`)
