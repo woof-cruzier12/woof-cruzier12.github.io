@@ -2,7 +2,22 @@
 {% assign sheet_data = site.data[answer_key_file] %}
 {% assign sheet_title = include.sheet_title | default: page.sheet_title | default: sheet_data.title %}
 
-<div class="sheet-container container-lg py-4">
+{% comment %}
+  Obfuscate answer keys with a simple Caesar shift (+1) so they don't
+  appear in plaintext in the DOM / view-source. They are decoded back
+  inside assets/js/tracker-sheet.js when "Submit & Grade" is clicked.
+{% endcomment %}
+{% assign encoded_keys = '' %}
+{% for answer in sheet_data.answers %}
+  {% case answer %}
+    {% when 'A' %}{% assign encoded_keys = encoded_keys | append: 'B' %}
+    {% when 'B' %}{% assign encoded_keys = encoded_keys | append: 'C' %}
+    {% when 'C' %}{% assign encoded_keys = encoded_keys | append: 'D' %}
+    {% when 'D' %}{% assign encoded_keys = encoded_keys | append: 'E' %}
+  {% endcase %}
+{% endfor %}
+
+<div class="sheet-container container-lg py-4" data-answer-keys="{{ encoded_keys }}">
   <div class="text-center mb-4">
     <h1 class="display-6 fw-bold mb-2">{{ sheet_title }}</h1>
     <p class="text-body-secondary mb-0">Pick an answer for each row, then submit to grade your sheet.</p>
@@ -46,7 +61,7 @@
       <div class="col-12 col-lg-6">
         <div class="vstack gap-3">
           {% for answer in sheet_data.answers limit: split_index %}
-            <div class="q-row card shadow-sm border-0" data-qnum="{{ forloop.index }}" data-key="{{ answer }}">
+            <div class="q-row card shadow-sm border-0" data-qnum="{{ forloop.index }}">
               <div class="card-body d-flex flex-column flex-md-row align-items-md-center gap-3">
                 <span class="q-num badge text-bg-dark rounded-pill">{{ forloop.index }}</span>
 
@@ -71,7 +86,7 @@
         <div class="vstack gap-3">
           {% for answer in sheet_data.answers offset: split_index %}
             {% assign question_number = forloop.index | plus: split_index %}
-            <div class="q-row card shadow-sm border-0" data-qnum="{{ question_number }}" data-key="{{ answer }}">
+            <div class="q-row card shadow-sm border-0" data-qnum="{{ question_number }}">
               <div class="card-body d-flex flex-column flex-md-row align-items-md-center gap-3">
                 <span class="q-num badge text-bg-dark rounded-pill">{{ question_number }}</span>
 
@@ -100,143 +115,8 @@
   </form>
 </div>
 
-<script>
-$(function () {
-  const allowIncompleteSubmit = true; // Set to true to allow submission without answering all questions
-  const validationModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('validation-modal'));
-  const scoreModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('score-modal'));
-  const sheetContainer = $('.sheet-container');
-
-  function setAnswersRevealed(revealed) {
-    sheetContainer.toggleClass('answers-revealed', revealed);
-  }
-
-  function updateUnansweredState() {
-    $('.q-row').each(function () {
-      const row = $(this);
-      const hasSelection = row.find('input[type="radio"]:checked').length > 0;
-      row.toggleClass('unanswered', !hasSelection);
-    });
-  }
-
-  $('.q-row input[type="radio"]').on('change', updateUnansweredState);
-  $('#submit-btn').on('click', gradeSheet);
-  $('#reset-btn').on('click', resetSheet);
-  $('#show-answers-btn').on('click', function () {
-    setAnswersRevealed(true);
-    scoreModal.hide();
-  });
-  $('#back-to-sheet-btn').on('click', function () {
-    setAnswersRevealed(false);
-    scoreModal.hide();
-  });
-  updateUnansweredState();
-
-  function gradeSheet() {
-    const rows = $('.q-row');
-    const validationAlert = $('#validation-alert');
-    const scoreResult = $('#score-result');
-    const scoreCard = $('#score-card');
-    let score = 0;
-    let total = rows.length;
-    const missingRows = [];
-
-    validationAlert.text('');
-    validationModal.hide();
-    scoreResult.text('');
-    scoreCard.removeClass('result-failed result-qualifying result-good result-very-good result-outstanding');
-    setAnswersRevealed(false);
-    scoreModal.hide();
-
-    rows.each(function () {
-      const row = $(this);
-      row.removeClass('correct incorrect border border-warning');
-      row.find('.status-icon').text('').removeAttr('style');
-      row.find('input[type="radio"]').removeAttr('data-is-correct');
-    });
-
-    updateUnansweredState();
-
-    rows.each(function () {
-      const row = $(this);
-      const selectedInput = row.find('input[type="radio"]:checked');
-
-      if (!selectedInput.length) {
-        missingRows.push(this);
-      }
-    });
-
-    if (missingRows.length > 0 && !allowIncompleteSubmit) {
-      validationAlert.text(`Please answer all ${missingRows.length} remaining question${missingRows.length === 1 ? '' : 's'} before submitting.`);
-      validationModal.show();
-      return;
-    }
-
-    rows.each(function () {
-      const row = $(this);
-      const correctKey = row.data('key');
-      const selectedInput = row.find('input[type="radio"]:checked');
-      const statusIcon = row.find('.status-icon');
-
-      row.removeClass('correct incorrect');
-
-      row.find('input[type="radio"]').each(function () {
-        $(this).attr('data-is-correct', this.value === correctKey);
-      });
-
-      row.removeClass('border border-warning');
-
-      if (selectedInput.val() === correctKey) {
-        score++;
-        row.addClass('correct');
-        statusIcon.text('✓').css('color', '#16a34a');
-      } else {
-        row.addClass('incorrect');
-        statusIcon.text('✗').css('color', '#dc2626');
-      }
-    });
-
-    const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
-    let resultLabel = 'Failed';
-
-    if (percentage >= 90) {
-      resultLabel = 'Outstanding';
-      scoreCard.addClass('result-outstanding');
-    } else if (percentage >= 75) {
-      resultLabel = 'Very Good';
-      scoreCard.addClass('result-very-good');
-    } else if (percentage >= 70) {
-      resultLabel = 'Good Score (Area on General Weighted Average)';
-      scoreCard.addClass('result-good');
-    } else if (percentage > 50) {
-      resultLabel = 'Qualifying (Minimum Subject Rating)';
-      scoreCard.addClass('result-qualifying');
-    } else {
-      scoreCard.addClass('result-failed');
-    }
-
-    $('#user-score').text(score);
-    $('#score-percentage').text(`${percentage}%`);
-    scoreResult.text(resultLabel);
-    scoreModal.show();
-  };
-
-  function resetSheet() {
-    $('#bubble-form')[0].reset();
-    $('#score-card').removeClass('result-failed result-qualifying result-good result-very-good result-outstanding');
-    $('#validation-alert').text('');
-    validationModal.hide();
-    scoreModal.hide();
-    setAnswersRevealed(false);
-    $('#score-result').text('');
-
-    $('.q-row').each(function () {
-      const row = $(this);
-      row.removeClass('correct incorrect border border-warning');
-      row.find('.status-icon').text('').removeAttr('style');
-      row.find('input[type="radio"]').removeAttr('data-is-correct');
-    });
-    updateUnansweredState();
-  };
-});
-</script>
+<script
+  src="https://code.jquery.com/jquery-4.0.0.min.js"
+  integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao="
+  crossorigin="anonymous"></script>
+<script src="{{ '/assets/js/tracker-sheet.js' | relative_url }}"></script>
