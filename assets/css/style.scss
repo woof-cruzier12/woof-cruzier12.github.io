@@ -2,27 +2,53 @@
 ---
 
 // ========== Variables ==========
+$font-open-sans: "Open Sans", sans-serif;
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400; // Default regular weight (supports 300 to 800)
+  font-style: normal;
+}
+
+
 $color-text-primary: #18181b;
 $color-text-secondary: #52525b;
 $color-border: #e4e4e7;
 $color-bubble-border: #3f3f46;
-$color-white: #FAFAFA;
+$color-white: #F8F9FA;
+$color-light-body-bg: #F8F9FA; // page background in light mode
 
 $color-danger: #dc2626;
 $color-warning: #c2410c;
 $color-info: #2563eb;
 $color-teal: #0f766e;
 $color-success: #4CAF50;
-$color-amber: #FAFAFA;
+$color-amber: #FAFAFA; // replaced due to visibility issues with #facc15 (yellow) on dark background
 
 $color-success-bg: #dcfce7;
 $color-warning-bg: #fff7ed;
+
+$color-danger-404: #ff6b6b;
 
 $radius-card: 8px;
 $bubble-size: 34px;
 
 $font-weight-bold: 700;
 $font-weight-semibold: 600;
+
+// ========== Dark Theme Variables ==========
+$color-dark-bg: #1E1E1E;              // card/row backgrounds
+$color-dark-bg-light: #121212;        // bg-light override
+$color-dark-text: #F5F5F5;            // primary text
+$color-dark-text-secondary: #E0E0E0;  // secondary text
+$color-dark-text-inverse: #18181b;    // text on light elements (checked bubbles)
+$color-dark-border: #3f3f46;          // card borders
+$color-dark-border-strong: #52525b;   // bubble borders / hover
+$color-dark-success: #4ade80;         // success text
+$color-dark-success-bg: rgba(22, 163, 74, 0.2);       // success background
+$color-dark-success-shadow: rgba(74, 222, 128, 0.2);  // success box-shadow
+$color-dark-warning-bg: #a1a1aa00;      // unanswered background
 
 // ========== Theme Toggle ==========
 #themeToggle {
@@ -233,7 +259,7 @@ $font-weight-semibold: 600;
 
   h1 {
     font-size: 4em;
-    color: #ff6b6b;
+    color: $color-danger-404;
   }
 
   p {
@@ -256,6 +282,126 @@ $font-weight-semibold: 600;
   }
 }
 
+// ========== Q&A Mode ==========
+.qa-container {
+  // Scope the question card to a comfortable width
+  .qa-form {
+    max-width: 640px;
+  }
+
+  // Question card
+  .qa-card {
+    background: $color-white;
+
+    // Question header (number + text)
+    .qa-question {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+
+      .qa-question-text {
+        font-size: 1.1rem;
+        font-weight: $font-weight-semibold;
+        line-height: 1.5;
+      }
+    }
+
+    // Answer options (bubble + text on one row)
+    .qa-options {
+      .qa-option-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border: 2px solid $color-border;
+        border-radius: $radius-card;
+        cursor: pointer;
+        transition: all 0.15s ease;
+
+        &:hover {
+          border-color: $color-bubble-border;
+        }
+
+        // Hide the native radio, keep the bubble as the visual indicator
+        input[type="radio"] {
+          position: absolute;
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        // Highlight the selected option's border
+        input[type="radio"]:checked ~ .qa-option-text {
+          font-weight: $font-weight-bold;
+        }
+
+        input[type="radio"]:checked + .qa-option-bubble {
+          background-color: $color-text-primary;
+          color: $color-white;
+          border-color: $color-text-primary;
+        }
+
+        .qa-option-text {
+          font-size: 1rem;
+          color: $color-text-primary;
+        }
+      }
+    }
+  }
+
+  // Unanswered highlight (reuses the amber style from tracker-sheet)
+  .qa-card.unanswered .qa-option-label {
+    border-color: $color-amber;
+    background-color: $color-warning-bg;
+    box-shadow: inset 0 0 0 1px rgba(217, 119, 6, 0.2);
+  }
+
+  // Correct / incorrect states after grading
+  .qa-card.incorrect {
+    .qa-option-label input[value][data-is-correct="true"] + .qa-option-bubble {
+      border: 2px solid $color-success;
+      color: $color-success;
+      background-color: $color-success-bg;
+    }
+
+    .qa-option-label input[type="radio"]:checked + .qa-option-bubble {
+      background-color: $color-danger;
+      border-color: $color-danger;
+      color: $color-white;
+    }
+  }
+
+  // Revealed correct answers highlight
+  &.answers-revealed .qa-option-label input[data-is-correct="true"] + .qa-option-bubble {
+    background-color: $color-success-bg;
+    border-color: $color-success;
+    color: $color-success;
+    box-shadow: inset 0 0 0 1px rgba(22, 163, 74, 0.2);
+  }
+
+  // Navigation buttons
+  .qa-nav-btn {
+    min-width: 110px;
+    font-weight: $font-weight-semibold;
+
+    &:disabled {
+      opacity: 0.4;
+    }
+  }
+
+  .qa-nav-counter {
+    font-weight: $font-weight-semibold;
+  }
+}
+
+// ========== Light Mode (system preference) ==========
+// Override Bootstrap's `--bs-body-bg` so the page background matches the cards.
+// Note: `#{}` interpolation is required so the SCSS variable resolves inside
+// the CSS custom property (older Sass compilers don't resolve it otherwise).
+html[data-bs-theme="light"] {
+  --bs-body-bg: #{$color-light-body-bg};
+}
+
 // ========== Dark Mode (system preference) ==========
 // Bootstrap 5.3 sets `data-bs-theme="dark"` on <html> via JS in the layout.
 // These overrides adapt custom components to match the dark theme.
@@ -263,29 +409,36 @@ $font-weight-semibold: 600;
 html[data-bs-theme="dark"] {
   // Override Bootstrap's `bg-light` utility for custom usage (e.g., About page)
   .bg-light {
-    background-color: #2d333b !important;
+    background-color: $color-dark-bg-light !important;
+  }
+
+  // Make `text-bg-dark` badges (question numbers, progress pill) stand out
+  // against the dark card background instead of blending in.
+  .text-bg-dark {
+    background-color: $color-dark-bg-light !important;
+    color: $color-dark-text !important;
   }
 
   // ========== Score Result & Card ==========
   .score-result {
-    color: #e4e4e7;
+    color: $color-dark-text;
   }
 
   .score-card {
-    background: #212529;
-    border-color: #3f3f46;
+    background: $color-dark-bg;
+    border-color: $color-dark-border;
   }
 
   .score-percentage {
-    color: #a1a1aa;
+    color: $color-dark-text-secondary;
   }
 
   // ========== Question Row ==========
   .q-row {
-    background: #212529;
+    background: $color-dark-bg;
 
     &.unanswered .bubble {
-      background-color: rgba(217, 119, 6, 0.15);
+      background-color: $color-dark-warning-bg;
       border-color: $color-amber;
     }
   }
@@ -293,53 +446,136 @@ html[data-bs-theme="dark"] {
   // ========== Bubble Inputs ==========
   .bubble-label {
     input[type="radio"]:checked + .bubble {
-      background-color: #e4e4e7;
-      color: #18181b;
-      border-color: #e4e4e7;
+      background-color: $color-dark-text;
+      color: $color-dark-text-inverse;
+      border-color: $color-dark-text;
     }
   }
 
   .bubble {
-    border-color: #52525b;
-    color: #e4e4e7;
+    border-color: $color-dark-border-strong;
+    color: $color-dark-text;
   }
 
   // ========== Success / Warning states ==========
   .sheet-container.answers-revealed .bubble-label input[data-is-correct="true"] + .bubble {
-    background-color: rgba(22, 163, 74, 0.2);
+    background-color: $color-dark-success-bg;
     border-color: $color-success;
-    color: #4ade80;
-    box-shadow: inset 0 0 0 1px rgba(74, 222, 128, 0.2);
+    color: $color-dark-success;
+    box-shadow: inset 0 0 0 1px $color-dark-success-shadow;
   }
 
   .q-row {
     &.incorrect {
       .bubble-label input[value][data-is-correct="true"] + .bubble {
         border-color: $color-success;
-        color: #4ade80;
-        background-color: rgba(22, 163, 74, 0.2);
+        color: $color-dark-success;
+        background-color: $color-dark-success-bg;
       }
 
       .bubble-label input[type="radio"]:checked + .bubble {
         background-color: $color-danger;
         border-color: $color-danger;
-        color: #18181b;
+        color: $color-dark-text-inverse;
       }
     }
   }
 
+  // ========== Q&A Mode ==========
+  .qa-card {
+    background: $color-dark-bg;
+
+    .qa-question-text {
+      color: $color-dark-text;
+    }
+
+    .qa-option-label {
+      border-color: $color-dark-border;
+
+      &:hover {
+        border-color: $color-dark-border-strong;
+      }
+
+      .qa-option-text {
+        color: $color-dark-text;
+      }
+
+      input[type="radio"]:checked + .qa-option-bubble {
+        background-color: $color-dark-text;
+        color: $color-dark-text-inverse;
+        border-color: $color-dark-text;
+      }
+    }
+
+    // Match/exceed the specificity of the light-mode border rule:
+    // `.qa-container .qa-card .qa-options .qa-option-label` (+ `:hover`)
+    .qa-options .qa-option-label {
+      border-color: $color-dark-border;
+
+      &:hover {
+        border-color: $color-dark-border-strong;
+      }
+    }
+
+    // Keep the unanswered amber highlight in dark mode: this rule also has
+    // to exceed the light-mode `.qa-card.unanswered .qa-option-label` rule.
+    // (Nested inside `.qa-card`, so `.unanswered` compiles to `.qa-card.unanswered`.)
+    &.unanswered .qa-options .qa-option-label {
+      border-color: $color-amber;
+      background-color: $color-dark-warning-bg;
+      box-shadow: inset 0 0 0 1px rgba(217, 119, 6, 0.2);
+    }
+
+    // Match/exceed the specificity of the light-mode rule:
+    // `.qa-container .qa-card .qa-options .qa-option-label .qa-option-text`
+    .qa-options .qa-option-label .qa-option-text {
+      color: $color-dark-text;
+    }
+
+    // Match/exceed the specificity of the light-mode checked-bubble rule:
+    // `.qa-container .qa-card .qa-options .qa-option-label input[type="radio"]:checked + .qa-option-bubble`
+    .qa-options .qa-option-label input[type="radio"]:checked + .qa-option-bubble {
+      background-color: $color-dark-text;
+      color: $color-dark-text-inverse;
+      border-color: $color-dark-text;
+    }
+
+    // Dark-mode correct/incorrect states after grading
+    // (mirrors the light-mode `.qa-card.incorrect` block)
+    &.incorrect {
+      .qa-option-label input[value][data-is-correct="true"] + .qa-option-bubble {
+        border-color: $color-success;
+        color: $color-dark-success;
+        background-color: $color-dark-success-bg;
+      }
+
+      .qa-option-label input[type="radio"]:checked + .qa-option-bubble {
+        background-color: $color-danger;
+        border-color: $color-danger;
+        color: $color-dark-text-inverse;
+      }
+    }
+  }
+
+  .qa-container.answers-revealed .qa-option-label input[data-is-correct="true"] + .qa-option-bubble {
+    background-color: $color-dark-success-bg;
+    border-color: $color-success;
+    color: $color-dark-success;
+    box-shadow: inset 0 0 0 1px $color-dark-success-shadow;
+  }
+
   // ========== 404 Page ==========
   .error-page {
-    background: #212529;
+    background: $color-dark-bg;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 
     h1 {
-      color: #ff6b6b;
+      color: $color-danger-404;
     }
 
     .btn {
-      background-color: #18181b;
-      color: #e4e4e7;
+      background-color: $color-dark-text-inverse;
+      color: $color-dark-text;
     }
   }
 }

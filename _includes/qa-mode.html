@@ -1,0 +1,126 @@
+﻿{% assign answer_key_file = include.answer_key_file | default: page.answer_key_file | default: 'keys' %}
+{% assign questions_file = include.questions_file | default: page.questions_file | default: 'questions' %}
+{% assign sheet_data = site.data[answer_key_file] %}
+{% assign questions_data = site.data[questions_file] %}
+{% assign sheet_title = include.sheet_title | default: page.sheet_title | default: questions_data.title | default: sheet_data.title %}
+
+{% comment %}
+  Obfuscate answer keys with a simple Caesar shift (+1) so they don't
+  appear in plaintext in the DOM / view-source. They are decoded back
+  inside assets/js/qa-mode.js when "Submit & Grade" is clicked.
+  This is the SAME obfuscation used in tracker-sheet.html.
+{% endcomment %}
+{% assign encoded_keys = '' %}
+{% for answer in sheet_data.answers %}
+  {% case answer %}
+    {% when 'A' %}{% assign encoded_keys = encoded_keys | append: 'B' %}
+    {% when 'B' %}{% assign encoded_keys = encoded_keys | append: 'C' %}
+    {% when 'C' %}{% assign encoded_keys = encoded_keys | append: 'D' %}
+    {% when 'D' %}{% assign encoded_keys = encoded_keys | append: 'E' %}
+  {% endcase %}
+{% endfor %}
+
+<div class="sheet-container qa-container container-lg py-4" data-answer-keys="{{ encoded_keys }}">
+  <div class="text-center mb-4">
+    <h1 class="display-6 fw-bold mb-2">{{ sheet_title }}</h1>
+    <p class="text-body-secondary mb-0">Answer one question at a time, then submit to grade your answers.</p>
+  </div>
+
+  <!-- Score Board Modal (same as tracker-sheet) -->
+  <div class="modal fade" id="qa-score-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div id="qa-score-card" class="score-card card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h2 class="h5 fw-bold mb-3">Your Score</h2>
+          <div class="score-display">
+            Score: <span id="qa-user-score">0</span> / {{ sheet_data.answers | size }}
+          </div>
+          <div id="qa-score-percentage" class="score-percentage">0%</div>
+          <div id="qa-score-result" class="score-result mt-2"></div>
+          <button type="button" class="btn btn-primary" id="qa-show-answers-btn">Show Answers</button>
+          <button type="button" class="btn btn-outline-secondary" id="qa-back-to-sheet-btn" data-bs-dismiss="modal">Back to Questions</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Validation Modal (same styling as tracker-sheet) -->
+  <div class="modal fade" id="qa-validation-modal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-body text-center py-4">
+          <div id="qa-validation-alert" class="alert alert-warning mb-3" role="alert"></div>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% assign options = "A,B,C,D" | split: "," %}
+  {% assign question_count = sheet_data.answers | size %}
+
+  <form id="qa-form" class="qa-form mx-auto">
+    <!-- Progress indicator -->
+    <div class="qa-progress text-center mb-3">
+      <span class="badge text-bg-dark rounded-pill" id="qa-progress-label">Question 1 of {{ question_count }}</span>
+    </div>
+
+    <!-- Question cards: all rendered, only one visible at a time via JS -->
+    <div class="qa-cards">
+      {% for answer in sheet_data.answers %}
+        {% assign q_index = forloop.index0 %}
+        {% assign q_item = questions_data.questions[q_index] %}
+        <div class="qa-card card shadow-sm border-0" data-qnum="{{ forloop.index }}" data-question-index="{{ q_index }}">
+          <div class="card-body">
+            <!-- Question number + question text -->
+            <div class="qa-question mb-4">
+              <span class="q-num badge text-bg-dark rounded-pill">{{ forloop.index }}</span>
+              <p class="qa-question-text mb-0">{{ q_item.question }}</p>
+            </div>
+
+            <!-- Answer options (shaded answer bubbles - no letters shown so the
+                 correct answer can't be spoofed; the radio value still carries
+                 the keyed letter internally for grading) -->
+            <div class="qa-options vstack gap-2">
+              {% for option in options %}
+                <label class="qa-option-label">
+                  <input type="radio" name="qa-q{{ forloop.parentloop.index }}" value="{{ option }}">
+                  <span class="qa-option-bubble bubble" aria-hidden="true"></span>
+                  <span class="qa-option-text">{{ q_item.options[forloop.index0] }}</span>
+                </label>
+              {% endfor %}
+            </div>
+
+            <!-- Status indicator icon (correct/incorrect) -->
+            <div class="qa-status text-center mt-3">
+              <span class="status-icon fs-4 fw-bold"></span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Navigation arrows (bottom of card) -->
+    <div class="qa-nav d-flex justify-content-between align-items-center mt-3">
+      <button type="button" class="qa-nav-btn btn btn-outline-secondary" id="qa-prev-btn" aria-label="Previous question">
+        <span aria-hidden="true">&larr;</span> Previous
+      </button>
+      <span class="qa-nav-counter text-body-secondary" id="qa-counter">1 / {{ question_count }}</span>
+      <button type="button" class="qa-nav-btn btn btn-outline-secondary" id="qa-next-btn" aria-label="Next question">
+        Next <span aria-hidden="true">&rarr;</span>
+      </button>
+    </div>
+
+    <!-- Form actions (same as tracker-sheet) -->
+    <div class="form-actions d-flex flex-column flex-sm-row gap-2 pt-2">
+      <button type="button" id="qa-submit-btn" class="btn btn-primary btn-lg flex-fill">Submit & Grade</button>
+      <button type="button" id="qa-reset-btn" class="btn btn-outline-secondary btn-lg flex-fill">Reset</button>
+    </div>
+  </form>
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-4.0.0.min.js"
+  integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao="
+  crossorigin="anonymous"></script>
+<script src="{{ '/assets/js/qa-mode.js' | relative_url }}"></script>

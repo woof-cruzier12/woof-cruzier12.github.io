@@ -1,0 +1,236 @@
+# ============================================================
+# Q&A Mode Questions
+# ------------------------------------------------------------
+# This file stores the question text and options for the
+# Q&A mode. Each question maps 1-to-1 (by index) to the
+# answers in the corresponding answer key file (e.g. keys.yaml).
+#
+# Usage in a page's front matter:
+#   questions_file: questions
+#   answer_key_file: keys
+# ============================================================
+title: "PSAD Terms and Definitions - Set 1"
+questions:
+  - question: "The compressive pressure between two bodies that are pressed against each other is called:"
+    options:
+      - "shear stress"
+      - "axial stress"
+      - "bearing stress"
+      - "flexural stress"
+
+  - question: "Deformation per unit length is called:"
+    options:
+      - "Stress"
+      - "Strain"
+      - "Stiffness"
+      - "Rigidity"
+
+  - question: "When a material elongates, it contracts in the direction perpendicular to the direction of elongation. To determine the lateral deformation, a ratio of lateral to longitudinal strain is used. This ratio is called:"
+    options:
+      - "Young’s modulus"
+      - "Poisson’s ratio"
+      - "Shear modulus"
+      - "Modulus of rupture"
+
+  - question: "A body’s resistance to deformation is referred to as:"
+    options:
+      - "Plasticity"
+      - "Stiffness"
+      - "Rigidity"
+      - "Quezon City"
+
+  - question: "A member’s resistance to deformation relative to its length and is taken as the amount of force required to produce unit deformation is referred to as:"
+    options:
+      - "Plasticity"
+      - "Stiffness"
+      - "Rigidity"
+      - "Elasticity"
+
+  - question: "The inverse of flexibility is called:"
+    options:
+      - "Plasticity"
+      - "Stiffness"
+      - "Rigidity"
+      - "Elasticity"
+
+  - question: "Which of the following states that up to the proportional limit, a material’s stress is directly proportional to its strain?"
+    options:
+      - "Newton’s Law"
+      - "Cole’s Law"
+      - "Euler's Law"
+      - "Hooke’s Law"
+
+  - question: "The area under the entire stress-strain diagram which is also the amount of energy absorbed by the material per unit volume up to rupture is called:"
+    options:
+      - "Modulus of toughness"
+      - "Modulus of resilience"
+      - "Modulus of elasticity"
+      - "Modulus of rupture"
+
+  - question: "The area under the stress-strain diagram up to the yield point which is also the maximum energy absorbed by the material per unit volume before it deforms permanently is called:"
+    options:
+      - "Modulus of toughness"
+      - "Modulus of resilience"
+      - "Modulus of elasticity"
+      - "Modulus of rupture"
+
+  - question: "The ratio of normal stress to normal strain is called:"
+    options:
+      - "Shear modulus/Modulus of rigidity"
+      - "Young’s modulus/Modulus of elasticity"
+      - "Poisson’s ratio"
+      - "Modulus of rupture"
+
+  - question: "The ratio of shear stress to shear strain is called:"
+    options:
+      - "Modulus of rigidity"
+      - "Modulus of elasticity"
+      - "Poisson’s ratio"
+      - "Modulus of rupture"
+
+  - question: "Stress is not proportional anymore to the strain beyond this point in the stress-strain curve."
+    options:
+      - "Elastic limit"
+      - "Yield point"
+      - "Proportional limit"
+      - "Ultimate strength"
+
+  - question: "Which of the following is defined as the ability of a material to return to its original state after the load that caused its deformation is removed?"
+    options:
+      - "Elasticity"
+      - "Plasticity"
+      - "Rigidity"
+      - "Toughness"
+
+  - question: "The term that refers to breaking down of a material causing plastic deformation after the elastic limit is reached is:"
+    options:
+      - "Necking"
+      - "Strain Hardening"
+      - "Yielding"
+      - "Rupture"
+
+  - question: "The region in the stress-strain curve where the strength of the material increases after yielding until the ultimate strength is reached is called:"
+    options:
+      - "Necking"
+      - "Plastic deformation"
+      - "Strain hardening"
+      - "Rupture"
+
+  - question: "Long term, time-dependent loss of prestress due to constant elongation of tendons is called:"
+    options:
+      - "Shrinkage"
+      - "Relaxation"
+      - "Slip"
+      - "Fatigue"
+
+  - question: "Method of prestressing where the tendons are stressed prior to pouring of concrete is called:"
+    options:
+      - "Prefabrication"
+      - "Post-tensioning"
+      - "Pre-tensioning"
+      - "Curing"
+
+  - question: "Method of prestressing where the tendons are stressed after concrete has hardened is called:"
+    options:
+      - "Prefabrication"
+      - "Post-tensioning"
+      - "Pre-tensioning"
+      - "Curing"
+
+  - question: "Concrete tensile strength in flexure/bending is known as:"
+    options:
+      - "Modulus of toughness"
+      - "Modulus of resilience"
+      - "Coefficient of moment resistance"
+      - "Modulus of rupture"
+
+  - question: "A factor that accounts for deviations of the actual load from the nominal load, for uncertainties in the analysis that transforms the load into a load effect, and for the probability that more than one extreme load will occur simultaneously is termed as:"
+    options:
+      - "Strength reduction factor"
+      - "Resistance factor"
+      - "Load factor"
+      - "Importance factor"
+
+  - question: "A factor that accounts for deviations of the actual strength from the nominal strength due to variations in material strengths and dimensions is termed as:"
+    options:
+      - "Strength reduction factor"
+      - "Importance factor"
+      - "Load factor"
+      - "None of the above"
+
+  - question: "Time-dependent permanent deformation of concrete due to sustained loading is called:"
+    options:
+      - "Creep"
+      - "Fatigue"
+      - "Crushing"
+      - "Yielding"
+
+  - question: "A material’s tendency to break after being subjected to repeated cycles of stress is called:"
+    options:
+      - "Creep"
+      - "Fatigue"
+      - "Rupture"
+      - "Yielding"
+
+  - question: "The largest safe stress that can safely be carried by a material is referred to as:"
+    options:
+      - "Ultimate stress"
+      - "Yield stress"
+      - "Allowable stress"
+      - "Rupture stress"
+
+  - question: "The ratio of failure stress and working stress is called:"
+    options:
+      - "Load factor"
+      - "Strength reduction factor"
+      - "Factor of safety"
+      - "Overstrength factor"
+
+  - question: "A material that has identical physical and mechanical properties in all directions at a given point:"
+    options:
+      - "Homogeneous"
+      - "Heterogeneous"
+      - "Isotropic"
+      - "Orthotropic"
+
+  - question: "A material that has different physical and mechanical properties in all three perpendicular directions at a given point:"
+    options:
+      - "Homogeneous"
+      - "Heterogeneous"
+      - "Isotropic"
+      - "Orthotropic"
+
+  - question: "A material that has the same physical and mechanical properties on all points is called:"
+    options:
+      - "Homogeneous"
+      - "Heterogeneous"
+      - "Isotropic"
+      - "Orthotropic"
+
+  - question: "The term that refers to the beginning of plastic deformation where a material starts to break down after the elastic limit is reached is:"
+    options:
+      - "Necking"
+      - "Strain Hardening"
+      - "Yielding"
+      - "Rupture"
+
+  - question: "The place in the Earth’s crust where an earthquake originates is called:"
+    options:
+      - "Epicenter"
+      - "Focus"
+      - "Fault"
+      - "Plate"
+
+  - question: "The point on the Earth’s surface that is vertically above the focus is called:"
+    options:
+      - "Epicenter"
+      - "Focus"
+      - "Fault"
+      - "Rupture"
+
+  - question: "To pass the board exam, I need:"
+    options:
+      - "Analytical thinking skills"
+      - "Focus"
+      - "Prayer"
+      - "All of the above"
