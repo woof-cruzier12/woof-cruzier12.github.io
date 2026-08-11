@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2026-08-11
+## V0.0.2.10 - 2026-08-11
 
 ### Added
 - **Q&A Mode** (`_includes/qa-mode.html`, `assets/js/qa-mode.js`)
