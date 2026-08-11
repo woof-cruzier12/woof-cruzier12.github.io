@@ -28,7 +28,6 @@ twitter_username: woof-cruzier12
 github_username:  woof-cruzier12
 
 # Build settings
-theme: minima
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
